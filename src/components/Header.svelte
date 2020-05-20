@@ -3,7 +3,7 @@
   import { link, location } from "svelte-spa-router";
   import active from "svelte-spa-router/active";
   import { siteState, errorState } from "../store/SiteStore";
-  import { userState, userLoding } from "../store/UserStore";
+  import { userState, userLoding, userLevel } from "../store/UserStore";
 
   let drawerOpen = false;
   let modalOpen = false;
@@ -35,6 +35,7 @@
 
   const onClickLogout = () => {
     firebase.auth().signOut();
+    $userLevel = null;
   };
 
   const onClickTitleModify = async () => {
@@ -90,8 +91,8 @@
 <svelte:window on:click={onClickWindow} />
 
 {#if $location !== '/login'}
-  <header class="sticky left-0 top-0 bg-white shadow">
-    <nav class="flex items-center flex-wrap max-w-screen-xl p-3">
+  <header class="sticky left-0 top-0 bg-white shadow z-10">
+    <nav class="flex items-center flex-wrap p-3">
       <button
         class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex items-center
         justify-center rounded-full"
@@ -101,16 +102,18 @@
       {#if $siteState}
         <div
           class="title text-base font-medium flex items-center flex-shrink-0
-          ml-4">
+          ml-4 h-10">
           {$siteState.title}
         </div>
       {/if}
-      <button
-        class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex items-center
-        justify-center rounded-full ml-2"
-        on:click={onClickModalOpen}>
-        <i class="fas fa-pen" />
-      </button>
+      {#if $userLevel === 0}
+        <button
+          class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex
+          items-center justify-center rounded-full ml-2"
+          on:click={onClickModalOpen}>
+          <i class="fas fa-pen" />
+        </button>
+      {/if}
       {#if $userLoding}
         <div class="ml-auto relative">
           {#if $userState}

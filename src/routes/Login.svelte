@@ -17,7 +17,7 @@
       const res = await firebase.auth().signInWithPopup(provider);
       await firebase.auth().currentUser.getIdToken(true);
       push("/");
-      console.log(res.user);
+      // console.log(res.user);
     } catch (e) {
       console.log(e);
     }

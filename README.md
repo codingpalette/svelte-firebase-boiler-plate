@@ -1,3 +1,36 @@
+## firebase 설치
+
+```
+npm install -g firebase-tools
+```
+
+firebase 툴을 설치한다.
+
+```
+firebase login
+```
+
+구글로 로그인 합니다.  
+로그아웃을 해주고 싶으면
+
+```
+firebase logout
+```
+
+로그인 실패 시
+
+```
+firebase login —interactive
+```
+
+firebase init 을 하기전 firebase 사이트에서 사용할 기능을 열여준다 안그러면 오류가 나옴
+
+```
+firebase init
+```
+
+디렉토리에서 firebase init 을 합니다.
+
 ## firebase 초기 설정
 
 public -> init-frebase.js 파일을 만들고 firebase 에서 받은 키를 입력해 줍니다.
@@ -17,11 +50,48 @@ firebase.initializeApp(firebaseConfig);
 
 ```
 
+## firefunctions 관리자 설정
+
+설정 전 firebase Authentication 에서 구글 로그인을 열어줍니다.
+
+```
+cd functions/
+npm i
+firebase functions:config:set admin.email=abc@google.com
+```
+
+등록이 되었는지 확인 방법
+
+```
+firebase functions:config:get
+```
+
+확인이 완료 되면
+
+```
+firebase functions:config:get > .runtimeconfig.json
+```
+
+입력해서 json 파일을 만들어 줍니다.  
+functions 배포
+
+```
+npm run deploy
+```
+
 ## 시작하기
 
 ```
 npm i
 npm run dev
+```
+
+## 배포하기
+
+루트 디렉토리에서
+
+```
+firebase deploy
 ```
 
 _Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)_

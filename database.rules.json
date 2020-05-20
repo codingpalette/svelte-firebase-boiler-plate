@@ -1,6 +1,8 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    "site": {
+      ".read": true,
+      ".write": "auth.token.level === 0"
+    }
   }
 }

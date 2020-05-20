@@ -64,6 +64,10 @@
     text-decoration: underline;
   } */
 
+  header nav {
+    margin: 0 auto;
+  }
+
   .drawer_ul {
     width: 250px;
   }

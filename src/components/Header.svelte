@@ -45,7 +45,7 @@
         .child("site")
         .update({ title: inputTitle });
     } catch (e) {
-      // console.log(e);
+      console.log(e);
       // errorState.update(v => {
       //   const x = { ...v };
       //   x.open = true;
@@ -98,10 +98,13 @@
         on:click={onClickDrawerOpen}>
         <i class="fas fa-bars" />
       </button>
-      <div
-        class="title text-base font-medium flex items-center flex-shrink-0 ml-4">
-        {$siteState.title}
-      </div>
+      {#if $siteState}
+        <div
+          class="title text-base font-medium flex items-center flex-shrink-0
+          ml-4">
+          {$siteState.title}
+        </div>
+      {/if}
       <button
         class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex items-center
         justify-center rounded-full ml-2"

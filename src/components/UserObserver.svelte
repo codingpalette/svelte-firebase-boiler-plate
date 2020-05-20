@@ -1,6 +1,13 @@
 <script>
   import { onMount } from "svelte";
-  import { userState, userLoding } from "../store/UserStore";
+  import { userState, userLoding, userLevel } from "../store/UserStore";
+
+  const getUser = async user => {
+    const { claims } = await user.getIdTokenResult();
+    $userState = user;
+    $userLevel = claims.level;
+    $userLoding = true;
+  };
 
   // Client 환경에서 동작하도록 `onMount` 훅에서 실행합니다.
   onMount(() => {
@@ -8,8 +15,7 @@
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // 쓰기 가능한 객체이기 때문에 바로 사용자를 할당할 수 있습니다.
-        $userState = user;
-        $userLoding = true;
+        getUser(user);
       } else {
         // 사용자가 없는 경우 초기화합니다.
         $userState = null;

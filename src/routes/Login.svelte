@@ -15,6 +15,7 @@
     firebase.auth().languageCode = "ko";
     try {
       const res = await firebase.auth().signInWithPopup(provider);
+      await firebase.auth().currentUser.getIdToken(true);
       push("/");
       console.log(res.user);
     } catch (e) {

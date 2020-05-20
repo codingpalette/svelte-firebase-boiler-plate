@@ -1,5 +1,5 @@
 <script>
-  console.log(firebase);
+
 </script>
 
 <div>Home</div>

@@ -124,10 +124,32 @@
                 border-gray-300 bg-white">
                 <ul>
                   <li>
+                    <a
+                      href="/about"
+                      use:link
+                      class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
+                      <i class="fas fa-heart" />
+                      <span class="ml-2">장바구니</span>
+                    </a>
+                  </li>
+                  {#if $userLevel === 0}
+                    <li>
+                      <a
+                        href="/upload-product"
+                        use:link
+                        class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
+                        <i class="fas fa-upload" />
+                        <span class="ml-2">업로드</span>
+                      </a>
+                    </li>
+                  {/if}
+                  <li>
                     <div
-                      class="cursor-pointer py-3 px-4"
+                      class="cursor-pointer hover:bg-gray-300 py-3 px-4 block"
                       on:click={onClickLogout}>
-                      로그아웃
+                      <i class="fas fa-sign-out-alt" />
+                      <span class="ml-2">로그아웃</span>
+
                     </div>
                   </li>
                 </ul>
@@ -199,7 +221,7 @@
               href="/"
               use:link
               use:active
-              class="p-4 hover:bg-gray-200"
+              class="p-4 hover:bg-gray-200 block"
               on:click={onClickDrawerClose}>
               home
             </a>
@@ -209,7 +231,7 @@
               href="/about"
               use:link
               use:active
-              class="p-4 hover:bg-gray-200"
+              class="p-4 hover:bg-gray-200 block"
               on:click={onClickDrawerClose}>
               about
             </a>

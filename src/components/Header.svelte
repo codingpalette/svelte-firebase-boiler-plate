@@ -119,7 +119,9 @@
               <img class="user_image" src={$userState.photoURL} alt="" />
             </button>
             {#if userMenuOpen}
-              <div class="user_menu shadow rounded bg-white">
+              <div
+                class="user_menu shadow-md rounded border-solid border
+                border-gray-300 bg-white">
                 <ul>
                   <li>
                     <div

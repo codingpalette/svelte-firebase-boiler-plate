@@ -1,5 +1,6 @@
 <script>
   import SlideContainer from "../components/Home/SlideContainer.svelte";
+  import Section1Container from "../components/Home/Section1Container.svelte";
 </script>
 
 <style>
@@ -7,6 +8,8 @@
 </style>
 
 <SlideContainer />
+
+<Section1Container />
 
 <div>Home</div>
 <button

@@ -1,9 +1,10 @@
 <script>
+  import { siteState, errorState } from "../store/SiteStore";
+  import { userState, userLoding, userLevel } from "../store/UserStore";
   import { fly } from "svelte/transition";
   import { link, location } from "svelte-spa-router";
   import active from "svelte-spa-router/active";
-  import { siteState, errorState } from "../store/SiteStore";
-  import { userState, userLoding, userLevel } from "../store/UserStore";
+  import PenButton from "./PenButton.svelte";
 
   let drawerOpen = false;
   let modalOpen = false;
@@ -106,14 +107,8 @@
           {$siteState.title}
         </div>
       {/if}
-      {#if $userLevel === 0}
-        <button
-          class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex
-          items-center justify-center rounded-full ml-2"
-          on:click={onClickModalOpen}>
-          <i class="fas fa-pen" />
-        </button>
-      {/if}
+
+      <PenButton clickEvent={onClickModalOpen} />
       {#if $userLoding}
         <div class="ml-auto relative">
           {#if $userState}

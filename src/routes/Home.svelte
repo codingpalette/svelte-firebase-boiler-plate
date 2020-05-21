@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import Swiper from "swiper";
   let notSlide = "images/notslide.svg";
+  import PenButton from "../components/PenButton.svelte";
 
   // console.log(Swiper);
   let mainModalSlideLists = [];
@@ -135,11 +136,6 @@
     transform: translate(10px, -50%);
   }
 
-  .slide_modify_open_btn {
-    right: 10px;
-    top: 10px;
-  }
-
   .upload_image_list li {
     width: 25%;
     padding: 10px;
@@ -211,15 +207,8 @@
         <i class="fas fa-chevron-right fa-lg" />
       </button>
 
-      {#if $userLevel === 0}
-        <div
-          class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black
-          h-10 w-10 flex items-center justify-center rounded-full absolute
-          cursor-pointer z-10"
-          on:click={onClickslideModifyModalOpen}>
-          <i class="fas fa-pen" />
-        </div>
-      {/if}
+      <PenButton clickEvent={onClickslideModifyModalOpen} position />
+
     </div>
   {:else}
     <div class="not_slide_container relative">
@@ -231,15 +220,7 @@
           메인슬라이더를 등록해 주세요.
         </p>
       </div>
-      {#if $userLevel === 0}
-        <div
-          class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black
-          h-10 w-10 flex items-center justify-center rounded-full absolute
-          cursor-pointer z-10"
-          on:click={onClickslideModifyModalOpen}>
-          <i class="fas fa-pen" />
-        </div>
-      {/if}
+      <PenButton clickEvent={onClickslideModifyModalOpen} position />
 
     </div>
   {/if}

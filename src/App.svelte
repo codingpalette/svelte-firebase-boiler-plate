@@ -5,7 +5,7 @@
   import UserObserver from "./components/UserObserver.svelte";
   import Header from "./components/Header.svelte";
 
-  import { siteState, errorState } from "./store/SiteStore";
+  import { siteState, errorState, siteOk } from "./store/SiteStore";
 
   onMount(async () => {
     await firebase
@@ -16,6 +16,7 @@
         "value",
         sn => {
           const v = sn.val();
+          // console.log(v);
           if (!v) {
             firebase
               .database()
@@ -24,6 +25,7 @@
               .set($siteState);
           }
           $siteState = v;
+          $siteOk = true;
         },
         e => {
           console.log(e.message);
@@ -36,4 +38,6 @@
 
 <Header />
 
-<Router {routes} />
+{#if $siteOk}
+  <Router {routes} />
+{/if}

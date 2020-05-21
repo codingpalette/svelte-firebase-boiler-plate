@@ -1,20 +1,21 @@
 <script>
+  import { siteState, siteOk } from "../store/SiteStore";
   import { onMount } from "svelte";
   import Swiper from "swiper";
-  let backImg04 = "images/back_img04.jpg";
-  let backImg05 = "images/back_img05.jpg";
-  let backImg06 = "images/back_img06.jpg";
+  let notSlide = "images/notslide.svg";
+
   // console.log(Swiper);
 
-  let slideLists = [
-    { id: "1", src: backImg04 },
-    { id: "2", src: backImg05 },
-    { id: "3", src: backImg06 }
-  ];
+  let mainModalSlideLists = [];
 
-  let slideModifyOpen = false;
+  let slideModalOpen = false;
 
   onMount(() => {
+    if ($siteState.mainSliders) {
+      mainModalSlideLists = $siteState.mainSliders;
+    } else {
+      mainModalSlideLists = [];
+    }
     const swiper = new Swiper(".swiper-container", {
       loop: true,
 
@@ -25,8 +26,45 @@
     });
   });
 
-  const slideModifyModalOpen = () => {
-    slideModifyOpen = true;
+  const onClickslideModifyModalOpen = () => {
+    slideModalOpen = true;
+  };
+
+  const onClickSlideModifyModalClose = () => {
+    slideModalOpen = false;
+  };
+
+  const onChangeInput = async e => {
+    // console.log(e.target.files);
+    const file = e.target.files[0];
+    const _name = file.name;
+    const storageRef = firebase.storage().ref();
+    const res = await storageRef.child(`site/mainSliders/${_name}`).put(file);
+    const url = await storageRef
+      .child(`site/mainSliders/${_name}`)
+      .getDownloadURL();
+    // console.log(url);
+    mainModalSlideLists = [
+      ...mainModalSlideLists,
+      {
+        src: url
+      }
+    ];
+  };
+
+  const onClickDeleteImage = e => {
+    // console.log(e);
+    // console.log(event.detail.id);
+    mainModalSlideLists = mainModalSlideLists.filter(list => list.src !== e);
+  };
+
+  const onClickSlideSave = async () => {
+    await firebase
+      .database()
+      .ref()
+      .child("site")
+      .update({ mainSliders: mainModalSlideLists });
+    slideModalOpen = false;
   };
 </script>
 
@@ -92,6 +130,50 @@
     top: 10px;
   }
 
+  .upload_image_list li {
+    width: 25%;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .upload_image_list li button {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 10;
+    color: #fff;
+  }
+
+  .upload_image_list li .image_box {
+    position: relative;
+  }
+  .upload_image_list li .image_box:before {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    width: 100%;
+  }
+
+  .upload_image_list li .image_box img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+  }
+
+  .not_slide_container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .not_slide_container .content_box img {
+    max-width: 500px;
+  }
+
   @media screen and (min-width: 768px) {
     .slide_container {
       height: 640px;
@@ -100,60 +182,113 @@
 </style>
 
 <div class="slide_container">
-  <!-- Swiper -->
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-      {#each slideLists as list}
-        <div class="swiper-slide">
-          <img src={list.src} alt="" />
-        </div>
-      {/each}
+  {#if $siteState.mainSliders && $siteState.mainSliders.length > 0}
+    <!-- Swiper -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        {#each $siteState.mainSliders as list}
+          <div class="swiper-slide">
+            <img src={list.src} alt="" />
+          </div>
+        {/each}
+
+      </div>
+      <!-- Add Arrows -->
+      <button class="slide_btn prev_btn">
+        <i class="fas fa-chevron-left fa-lg" />
+      </button>
+      <button class="slide_btn next_btn">
+        <i class="fas fa-chevron-right fa-lg" />
+      </button>
+      <div
+        class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black h-10
+        w-10 flex items-center justify-center rounded-full absolute
+        cursor-pointer z-10"
+        on:click={onClickslideModifyModalOpen}>
+        <i class="fas fa-pen" />
+      </div>
+    </div>
+  {:else}
+    <div class="not_slide_container relative">
+      <div
+        class="content_box w-full h-full flex items-center justify-center
+        flex-col relative ">
+        <img src={notSlide} alt="" class="w-full h-auto " />
+        <p class="text-xl font-bold text-purple-500 mt-8">
+          메인슬라이더를 등록해 주세요.
+        </p>
+      </div>
+      <div
+        class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black h-10
+        w-10 flex items-center justify-center rounded-full absolute
+        cursor-pointer z-10"
+        on:click={onClickslideModifyModalOpen}>
+        <i class="fas fa-pen" />
+      </div>
 
     </div>
-    <!-- Add Arrows -->
-    <button class="slide_btn prev_btn">
-      <i class="fas fa-chevron-left fa-lg" />
-    </button>
-    <button class="slide_btn next_btn">
-      <i class="fas fa-chevron-right fa-lg" />
-    </button>
-    <div
-      class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black h-10
-      w-10 flex items-center justify-center rounded-full absolute cursor-pointer
-      z-10"
-      on:click={slideModifyModalOpen}>
-      <i class="fas fa-pen" />
-    </div>
-  </div>
-  {#if slideModifyOpen}
+  {/if}
+  {#if slideModalOpen}
     <div
       class="slide_modify_modal flex items-center justify-center fixed top-0
-      left-0 w-full h-full z-30 p-4">
+      left-0 w-full h-full z-30 p-4 overflow-y-auto">
       <div
         class="modal_content max-w-screen-md w-full rounded bg-white
-        overflow-hidden shadow-lg relative z-10">
+        overflow-hidden shadow-lg relative z-10 m-auto">
         <div class="px-6 py-4">
           <div class="font-bold text-xl mb-2 ">슬라이드 수정</div>
-
+          <div class="upload_image_list">
+            <ul class="flex flex-wrap">
+              {#each mainModalSlideLists as list}
+                <li>
+                  <button>
+                    <i
+                      class="far fa-times-circle fa-lg"
+                      on:click={onClickDeleteImage(list.src)} />
+                  </button>
+                  <div class="image_box">
+                    <img src={list.src} alt="" />
+                  </div>
+                </li>
+              {/each}
+            </ul>
+          </div>
+          <div class="input_box">
+            <input
+              type="file"
+              id="slide_image_file"
+              accept="image/*"
+              class="hidden"
+              on:change={onChangeInput} />
+            <label
+              for="slide_image_file"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2
+              px-4 rounded inline-flex items-center">
+              <span>이미지 업로드</span>
+            </label>
+          </div>
         </div>
         <div class="flex items-center justify-center mt-2">
 
           <button
             class="w-2/4 bg-gray-300 hover:bg-gray-200 focus:shadow-outline
-            focus:outline-none py-2 px-4">
+            focus:outline-none py-2 px-4"
+            on:click={onClickSlideModifyModalClose}>
             닫기
           </button>
           <button
             class="w-2/4 bg-purple-500 hover:bg-purple-400 focus:shadow-outline
             focus:outline-none text-white font-bold py-2 px-4"
-            type="button">
+            type="button"
+            on:click={onClickSlideSave}>
             수정
           </button>
         </div>
       </div>
       <div
-        class="modal_back drawer_back bg-gray-800 opacity-50 absolute left-0
-        top-0 w-full h-full " />
+        class="modal_back drawer_back bg-gray-800 opacity-50 fixed left-0 top-0
+        w-full h-full "
+        on:click={onClickSlideModifyModalClose} />
     </div>
   {/if}
 </div>

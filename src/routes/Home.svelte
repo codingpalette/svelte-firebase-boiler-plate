@@ -1,14 +1,14 @@
 <script>
   import { siteState, siteOk } from "../store/SiteStore";
+  import { userLevel } from "../store/UserStore";
   import { onMount } from "svelte";
   import Swiper from "swiper";
   let notSlide = "images/notslide.svg";
 
   // console.log(Swiper);
-
   let mainModalSlideLists = [];
-
   let slideModalOpen = false;
+  let swiper;
 
   onMount(() => {
     if ($siteState.mainSliders) {
@@ -16,7 +16,7 @@
     } else {
       mainModalSlideLists = [];
     }
-    const swiper = new Swiper(".swiper-container", {
+    swiper = new Swiper(".swiper-container", {
       loop: true,
 
       navigation: {
@@ -65,6 +65,16 @@
       .child("site")
       .update({ mainSliders: mainModalSlideLists });
     slideModalOpen = false;
+    swiper.destroy();
+    swiper = new Swiper(".swiper-container", {
+      loop: true,
+
+      navigation: {
+        nextEl: ".next_btn",
+        prevEl: ".prev_btn"
+      }
+    });
+    swiper.update();
   };
 </script>
 
@@ -200,13 +210,16 @@
       <button class="slide_btn next_btn">
         <i class="fas fa-chevron-right fa-lg" />
       </button>
-      <div
-        class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black h-10
-        w-10 flex items-center justify-center rounded-full absolute
-        cursor-pointer z-10"
-        on:click={onClickslideModifyModalOpen}>
-        <i class="fas fa-pen" />
-      </div>
+
+      {#if $userLevel === 0}
+        <div
+          class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black
+          h-10 w-10 flex items-center justify-center rounded-full absolute
+          cursor-pointer z-10"
+          on:click={onClickslideModifyModalOpen}>
+          <i class="fas fa-pen" />
+        </div>
+      {/if}
     </div>
   {:else}
     <div class="not_slide_container relative">
@@ -218,13 +231,15 @@
           메인슬라이더를 등록해 주세요.
         </p>
       </div>
-      <div
-        class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black h-10
-        w-10 flex items-center justify-center rounded-full absolute
-        cursor-pointer z-10"
-        on:click={onClickslideModifyModalOpen}>
-        <i class="fas fa-pen" />
-      </div>
+      {#if $userLevel === 0}
+        <div
+          class="slide_modify_open_btn bg-white hover:bg-gray-300 text-black
+          h-10 w-10 flex items-center justify-center rounded-full absolute
+          cursor-pointer z-10"
+          on:click={onClickslideModifyModalOpen}>
+          <i class="fas fa-pen" />
+        </div>
+      {/if}
 
     </div>
   {/if}
@@ -263,7 +278,7 @@
             <label
               for="slide_image_file"
               class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2
-              px-4 rounded inline-flex items-center">
+              px-4 rounded inline-flex items-center cursor-pointer">
               <span>이미지 업로드</span>
             </label>
           </div>

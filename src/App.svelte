@@ -37,7 +37,6 @@
 <UserObserver />
 
 <Header />
-
 {#if $siteOk}
   <Router {routes} />
 {/if}

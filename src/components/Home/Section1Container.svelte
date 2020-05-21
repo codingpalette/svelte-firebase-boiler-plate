@@ -1,10 +1,13 @@
 <script>
   let item01 = "images/item_img01.jpg";
+  let item02 = "images/item_img02.jpg";
+  let item03 = "images/item_img03.jpg";
+  let item04 = "images/item_img04.jpg";
 </script>
 
 <style>
   .item_content li {
-    width: 33.33%;
+    width: 50%;
   }
 
   .item_content li a {
@@ -24,6 +27,16 @@
     height: 100%;
     transform: translate(-50%, -50%);
     object-fit: cover;
+  }
+
+  .item_content .item_text_box {
+    height: 100px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .item_content li {
+      width: 33.33%;
+    }
   }
 </style>
 
@@ -47,9 +60,53 @@
           <a href="/" class="relative">
             <img src={item01} alt="" />
           </a>
-          <div class="item_text_box">
-            <p class="item_tit">석류</p>
-            <p class="item_price">15,000원</p>
+          <div class="item_text_box p-4">
+            <p class="item_tit my-2 text-sm text-gray-700 truncate">석류</p>
+            <p class="item_price text-xl">15,000원</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="p-4 box-border">
+          <a href="/" class="relative">
+            <img src={item02} alt="" />
+          </a>
+          <div class="item_text_box p-4">
+            <p class="item_tit my-2 text-sm text-gray-700 truncate">양파</p>
+            <p class="item_price text-xl">20,000원</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="p-4 box-border">
+          <a href="/" class="relative">
+            <img src={item03} alt="" />
+          </a>
+          <div class="item_text_box p-4">
+            <p class="item_tit my-2 text-sm text-gray-700 truncate">산딸기</p>
+            <p class="item_price text-xl">5,000원</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="p-4 box-border">
+          <a href="/" class="relative">
+            <img src={item04} alt="" />
+          </a>
+          <div class="item_text_box p-4">
+            <p class="item_tit my-2 text-sm text-gray-700 truncate">석류</p>
+            <p class="item_price text-xl">15,000원</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="p-4 box-border">
+          <a href="/" class="relative">
+            <img src={item01} alt="" />
+          </a>
+          <div class="item_text_box p-4">
+            <p class="item_tit my-2 text-sm text-gray-700 truncate">석류</p>
+            <p class="item_price text-xl">15,000원</p>
           </div>
         </div>
       </li>

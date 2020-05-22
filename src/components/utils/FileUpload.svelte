@@ -23,13 +23,17 @@
     imageLists = [
       ...imageLists,
       {
-        src: url
+        src: url,
+        name: _name
       }
     ];
   };
 
-  const onClickDeleteImage = e => {
-    imageLists = imageLists.filter(list => list.src !== e);
+  const onClickDeleteImage = async e => {
+    // console.log(e);
+    const storageRef = firebase.storage().ref();
+    await storageRef.child(`site/${section}/${e.name}`).delete();
+    imageLists = imageLists.filter(list => list.src !== e.src);
   };
 </script>
 
@@ -78,7 +82,7 @@
         <button type="button">
           <i
             class="far fa-times-circle fa-lg"
-            on:click={onClickDeleteImage(list.src)} />
+            on:click={onClickDeleteImage(list)} />
         </button>
         <div class="image_box">
           <img src={list.src} alt="" />

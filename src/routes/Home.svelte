@@ -1,6 +1,6 @@
 <script>
-  import SlideContainer from "../components/Home/SlideContainer.svelte";
-  import Section1Container from "../components/Home/Section1Container.svelte";
+  import SlideContainer from "../containers/home/SlideContainer.svelte";
+  import Section1Container from "../containers/Home/Section1Container.svelte";
 </script>
 
 <style>

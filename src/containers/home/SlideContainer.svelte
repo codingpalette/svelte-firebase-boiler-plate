@@ -4,7 +4,8 @@
   import { onMount } from "svelte";
   import Swiper from "swiper";
   let notSlide = "images/notslide.svg";
-  import PenButton from "../PenButton.svelte";
+  import PenButton from "../../components/PenButton.svelte";
+  import FileUpload from "../../components/utils/FileUpload.svelte";
 
   // console.log(Swiper);
   let mainModalSlideLists = [];
@@ -118,41 +119,6 @@
     transform: translate(10px, -50%);
   }
 
-  .upload_image_list li {
-    width: 25%;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-  }
-
-  .upload_image_list li button {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    z-index: 10;
-    color: #fff;
-  }
-
-  .upload_image_list li .image_box {
-    position: relative;
-  }
-  .upload_image_list li .image_box:before {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-    width: 100%;
-  }
-
-  .upload_image_list li .image_box img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-  }
-
   .not_slide_container {
     width: 100%;
     height: 100%;
@@ -219,36 +185,11 @@
         overflow-hidden shadow-lg relative z-10 m-auto">
         <div class="px-6 py-4">
           <div class="font-bold text-xl mb-2 ">슬라이드 수정</div>
-          <div class="upload_image_list">
-            <ul class="flex flex-wrap">
-              {#each mainModalSlideLists as list}
-                <li>
-                  <button>
-                    <i
-                      class="far fa-times-circle fa-lg"
-                      on:click={onClickDeleteImage(list.src)} />
-                  </button>
-                  <div class="image_box">
-                    <img src={list.src} alt="" />
-                  </div>
-                </li>
-              {/each}
-            </ul>
-          </div>
-          <div class="input_box">
-            <input
-              type="file"
-              id="slide_image_file"
-              accept="image/*"
-              class="hidden"
-              on:change={onChangeInput} />
-            <label
-              for="slide_image_file"
-              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2
-              px-4 rounded inline-flex items-center cursor-pointer">
-              <span>이미지 업로드</span>
-            </label>
-          </div>
+          <FileUpload
+            section="mainSliders"
+            maxitem="5"
+            bind:imageLists={mainModalSlideLists} />
+
         </div>
         <div class="flex items-center justify-center mt-2">
 

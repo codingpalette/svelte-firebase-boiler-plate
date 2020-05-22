@@ -52,12 +52,15 @@ firebase.initializeApp(firebaseConfig);
 
 ## firefunctions 관리자 설정
 
-설정 전 firebase Authentication 에서 구글 로그인을 열어줍니다.
+firebase 프로젝트 설정에서 서비스 계정으로 들어간 다음 Firebase Admin SDK 에서 새 비공개 키 생성을 눌러 json 파일을 받습니다. (이 파일은 누를 때 마다 값이 새로 바뀌니 한번만 해줍니다.)
+
+json 파일을 key.json 으로 이름을 바꾼 다음 functions 안에 넣어줍니다. firebase Authentication 에서 구글 로그인을 열어줍니다.
 
 ```
 cd functions/
 npm i
-firebase functions:config:set admin.email=abc@google.com
+firebase functions:config:set admin.email=관리자이메일@gmail.com admin.db_url=https://프로젝트이름.firebaseio.com
+
 ```
 
 등록이 되었는지 확인 방법
@@ -76,6 +79,7 @@ firebase functions:config:get > .runtimeconfig.json
 functions 배포
 
 ```
+firebase deploy --only functions
 npm run deploy
 ```
 

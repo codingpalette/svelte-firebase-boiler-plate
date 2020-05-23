@@ -2,7 +2,7 @@
   "rules": {
     ".read": true,
     "site": {
-      ".write": "auth.token.level === 0"
+      ".write": "root.child('users').child(auth.uid).child('level').val() == 0"
     }
   }
 }

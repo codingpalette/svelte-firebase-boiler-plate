@@ -1,5 +1,7 @@
 <script>
+  import { errorState } from "../../store/SiteStore";
   import FileUpload from "../../components/utils/FileUpload.svelte";
+  import Error from "../../components/Error.svelte";
 
   let questions = [
     { id: 1, text: `육류` },
@@ -16,6 +18,27 @@
   };
 
   const handleSubmit = async () => {
+    if (formData.title === "") {
+      $errorState = {
+        open: true,
+        errorMessage: "상품 이름을 입력해주세요."
+      };
+      return false;
+    }
+    if (formData.description === "") {
+      $errorState = {
+        open: true,
+        errorMessage: "상품 설명을 입력해주세요."
+      };
+      return false;
+    }
+    if (formData.price === "") {
+      $errorState = {
+        open: true,
+        errorMessage: "상품 가격을 입력해주세요."
+      };
+      return false;
+    }
     console.log(formData);
     try {
       await firebase
@@ -140,3 +163,5 @@
 
   </form>
 </div>
+
+<Error backcolor="red" />

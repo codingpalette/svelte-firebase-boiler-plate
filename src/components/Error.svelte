@@ -3,12 +3,13 @@
   import { errorState } from "../store/SiteStore";
   export let backcolor;
   let timeOut = true;
+  let timeEvent;
 
   const errorsubscribe = errorState.subscribe(value => {
     // console.log(value);
     if (value.open && timeOut) {
       timeOut = false;
-      setTimeout(function() {
+      timeEvent = setTimeout(function() {
         errorState.update(v => {
           const x = { ...v };
           x.open = false;
@@ -19,6 +20,17 @@
       }, 3000);
     }
   });
+
+  const onClickErrorClose = () => {
+    errorState.update(v => {
+      const x = { ...v };
+      x.open = false;
+      x.errorMessage = "";
+      return x;
+    });
+    clearTimeout(timeEvent);
+    timeOut = true;
+  };
 
   onDestroy(errorsubscribe);
 </script>
@@ -67,7 +79,7 @@
     class="error_content fixed z-50 py-4 px-4 text-sm rounded"
     class:red={backcolor === 'red'}
     class:grren={backcolor === 'grren'}>
-    <button class="close_btn">
+    <button class="close_btn" on:click={onClickErrorClose}>
       <i class="fas fa-times" />
     </button>
     {$errorState.errorMessage}

@@ -1,8 +1,35 @@
 <script>
   import { productDetailItem } from "../../store/SiteStore";
+
+  let count = 1;
+  let totalCount;
+
+  const productDetailItemsubscribe = productDetailItem.subscribe(value => {
+    // console.log(value);
+    if (value) {
+      totalCount = value.price * count;
+    }
+  });
+
+  const onClickCountPlus = () => {
+    count += 1;
+    totalCount = $productDetailItem.price * count;
+  };
+  const onClickCountMinus = () => {
+    if (count === 1) {
+      return false;
+    }
+    count -= 1;
+    totalCount = $productDetailItem.price * count;
+  };
 </script>
 
 <style>
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   .area_item {
     width: 47.5%;
   }
@@ -18,6 +45,14 @@
   }
   .area_btn_box button {
     width: 47.5%;
+  }
+  .count_input {
+    width: 50px;
+    height: 40px;
+    padding: 0 5px;
+  }
+  .count_btn_box button {
+    line-height: 1;
   }
 </style>
 
@@ -43,8 +78,45 @@
           </li>
           <li class="item_price py-4 flex items-center">
             <strong class="text-sm font-normal">상품설명</strong>
+            <div class=" flex-1">{$productDetailItem.description}</div>
+          </li>
+          <li class="item_price py-4 flex items-center">
+            <strong class="text-sm font-normal">구입개수</strong>
+            <div class="flex-1 flex items-center justity-center">
+              <input
+                type="number"
+                min="1"
+                max="99"
+                step="1"
+                value={count}
+                class="count_input appearance-none block bg-gray-200
+                text-gray-700 border-2 border-gray-200 rounded leading-tight
+                focus:outline-none focus:bg-white focus:border-purple-500" />
+              <div class="count_btn_box ml-auto">
+                <button
+                  type="button"
+                  class="py-2 px-4 box-border bg-purple-500 hover:bg-purple-400
+                  focus:shadow-outline focus:outline-none text-white font-bold
+                  rounded"
+                  on:click={onClickCountPlus}>
+                  <i class="fas fa-plus" />
+                </button>
+                <button
+                  type="button"
+                  class="py-2 px-4 box-border bg-purple-500 hover:bg-purple-400
+                  focus:shadow-outline focus:outline-none text-white font-bold
+                  rounded"
+                  on:click={onClickCountMinus}>
+                  <i class="fas fa-minus" />
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="item_price py-4 flex items-center">
+            <strong class="text-sm font-normal">합계금액</strong>
             <div class="text-gray-500 font-bold flex-1">
-              {$productDetailItem.description}
+              <span class="text-purple-500">{totalCount.toLocaleString()}</span>
+              원
             </div>
           </li>
         </ul>

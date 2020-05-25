@@ -39,6 +39,7 @@
     width: 100%;
     padding-bottom: 100%;
   }
+
   .item_content li img {
     position: absolute;
     left: 50%;
@@ -60,7 +61,7 @@
   }
 </style>
 
-<div class="section1_container bg-gray-100">
+<div class="section1_container ">
   <h2 class="pt-24 text-center text-3xl font-bold">
     마음에 드는 식재료를 고르는것부터 시작해보세요
   </h2>
@@ -76,8 +77,10 @@
   <div class="item_content max-w-screen-lg mt-24 mr-auto ml-auto">
     <ul class="flex items-center flex-wrap">
       {#each $productList as list}
-        <li>
-          <div class="p-4 box-border">
+        <li class="p-4 ">
+          <div
+            class="box-border rounded overflow-hidden border-solid border
+            border-gray-300 shadow">
             <a href="/product/{list.id}" use:link class="relative">
               <img src={list.productImages[0].src} alt="" />
             </a>

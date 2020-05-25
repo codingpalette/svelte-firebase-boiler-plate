@@ -13,3 +13,5 @@ export const errorState = writable({
 });
 
 export const productList = writable([]);
+
+export const productDetailItem = writable(null);

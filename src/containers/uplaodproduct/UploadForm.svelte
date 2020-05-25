@@ -3,6 +3,7 @@
   import FileUpload from "../../components/utils/FileUpload.svelte";
   import Error from "../../components/Error.svelte";
 
+  let Mode = "create";
   let questions = [
     { id: 1, text: `육류` },
     { id: 2, text: `해산물` },
@@ -39,12 +40,46 @@
       };
       return false;
     }
-    console.log(formData);
+
+    const today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; //January is 0!
+    const yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+
+    let date, createdAt;
+    if (Mode === "create") {
+      date = yyyy + "-" + mm + "-" + dd;
+      createdAt = today;
+    } else {
+      date = formData.date;
+      createdAt = formData.createdAt;
+    }
+
+    const modifiedAt = today;
+
+    formData.date = date;
+    formData.createdAt = createdAt;
+    formData.modifiedAt = modifiedAt;
+
+    const RandomNumber = Math.random()
+      .toString(36)
+      .substr(2, 11);
+
+    formData.id = `product${RandomNumber}${date}`;
+
+    // console.log(formData);
+
     try {
       await firebase
         .firestore()
         .collection("products")
-        .doc(formData.title)
+        .doc(formData.id)
         .set(formData);
     } catch (e) {
       console.log(e);
@@ -52,7 +87,6 @@
 
     // const formData = new FormData(); // Currently empty
     // console.log(formData);
-    console.log("bbbb");
   };
 </script>
 

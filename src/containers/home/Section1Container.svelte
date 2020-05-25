@@ -1,8 +1,27 @@
 <script>
+  import { productList } from "../../store/SiteStore";
+  import { onMount } from "svelte";
   let item01 = "images/item_img01.jpg";
   let item02 = "images/item_img02.jpg";
   let item03 = "images/item_img03.jpg";
   let item04 = "images/item_img04.jpg";
+
+  const getProducts = async () => {
+    const res = await firebase
+      .firestore()
+      .collection("products")
+      .orderBy("createdAt", "desc")
+      .limit(20)
+      .get();
+    // console.log(res);
+
+    $productList = res.docs.map(e => e.data());
+    // console.log($productList);
+  };
+
+  onMount(() => {
+    getProducts();
+  });
 </script>
 
 <style>
@@ -55,61 +74,21 @@
 
   <div class="item_content max-w-screen-lg mt-24 mr-auto ml-auto">
     <ul class="flex items-center flex-wrap">
-      <li>
-        <div class="p-4 box-border">
-          <a href="/" class="relative">
-            <img src={item01} alt="" />
-          </a>
-          <div class="item_text_box p-4">
-            <p class="item_tit my-2 text-sm text-gray-700 truncate">석류</p>
-            <p class="item_price text-xl">15,000원</p>
+      {#each $productList as list}
+        <li>
+          <div class="p-4 box-border">
+            <a href="/" class="relative">
+              <img src={list.productImages[0].src} alt="" />
+            </a>
+            <div class="item_text_box p-4">
+              <p class="item_tit my-2 text-sm text-gray-700 truncate">
+                {list.title}
+              </p>
+              <p class="item_price text-xl">{list.price.toLocaleString()}원</p>
+            </div>
           </div>
-        </div>
-      </li>
-      <li>
-        <div class="p-4 box-border">
-          <a href="/" class="relative">
-            <img src={item02} alt="" />
-          </a>
-          <div class="item_text_box p-4">
-            <p class="item_tit my-2 text-sm text-gray-700 truncate">양파</p>
-            <p class="item_price text-xl">20,000원</p>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="p-4 box-border">
-          <a href="/" class="relative">
-            <img src={item03} alt="" />
-          </a>
-          <div class="item_text_box p-4">
-            <p class="item_tit my-2 text-sm text-gray-700 truncate">산딸기</p>
-            <p class="item_price text-xl">5,000원</p>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="p-4 box-border">
-          <a href="/" class="relative">
-            <img src={item04} alt="" />
-          </a>
-          <div class="item_text_box p-4">
-            <p class="item_tit my-2 text-sm text-gray-700 truncate">석류</p>
-            <p class="item_price text-xl">15,000원</p>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="p-4 box-border">
-          <a href="/" class="relative">
-            <img src={item01} alt="" />
-          </a>
-          <div class="item_text_box p-4">
-            <p class="item_tit my-2 text-sm text-gray-700 truncate">석류</p>
-            <p class="item_price text-xl">15,000원</p>
-          </div>
-        </div>
-      </li>
+        </li>
+      {/each}
 
     </ul>
   </div>

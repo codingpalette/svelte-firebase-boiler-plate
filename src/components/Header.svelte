@@ -1,11 +1,12 @@
 <script>
   import { siteState, errorState } from "../store/SiteStore";
-  import { userState, userLoding, userLevel } from "../store/UserStore";
+  import { userState, userLevel } from "../store/UserStore";
   import { fly } from "svelte/transition";
   import { link, location } from "svelte-spa-router";
   import active from "svelte-spa-router/active";
   import PenButton from "./PenButton.svelte";
 
+  let logo = "images/svelte-logo.svg";
   let drawerOpen = false;
   let modalOpen = false;
   let userMenuOpen = false;
@@ -70,6 +71,17 @@
     margin: 0 auto;
   }
 
+  header nav .logo_box a {
+    display: block;
+    width: auto;
+    height: 100%;
+  }
+  header nav .logo_box img {
+    display: block;
+    height: 100%;
+    width: auto;
+  }
+
   .drawer_ul {
     width: 250px;
   }
@@ -100,73 +112,72 @@
         on:click={onClickDrawerOpen}>
         <i class="fas fa-bars" />
       </button>
-      {#if $siteState}
-        <div
-          class="title text-base font-medium flex items-center flex-shrink-0
-          ml-4 h-10">
-          {$siteState.title}
-        </div>
-      {/if}
+      <div
+        class="logo_box text-base font-medium flex items-center flex-shrink-0
+        ml-4 h-10">
+        <a href="/" use:link>
+          <img src={logo} alt="로고" />
+        </a>
+      </div>
 
-      <PenButton clickEvent={onClickModalOpen} />
-      {#if $userLoding}
-        <div class="ml-auto relative">
-          {#if $userState}
-            <button
-              class="user_menu_btn h-10 w-10 flex items-center justify-center
-              overflow-hidden rounded-full"
-              on:click={onClickUserMenuOpen}>
-              <img class="user_image" src={$userState.photoURL} alt="" />
-            </button>
-            {#if userMenuOpen}
-              <div
-                class="user_menu shadow-md rounded border-solid border
-                border-gray-300 bg-white">
-                <ul>
+      <!-- <PenButton clickEvent={onClickModalOpen} /> -->
+
+      <div class="ml-auto relative">
+        {#if $userState}
+          <button
+            class="user_menu_btn h-10 w-10 flex items-center justify-center
+            overflow-hidden rounded-full"
+            on:click={onClickUserMenuOpen}>
+            <img class="user_image" src={$userState.photoURL} alt="" />
+          </button>
+          {#if userMenuOpen}
+            <div
+              class="user_menu shadow-md rounded border-solid border
+              border-gray-300 bg-white">
+              <ul>
+                <li>
+                  <a
+                    href="/about"
+                    use:link
+                    class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
+                    <i class="fas fa-heart" />
+                    <span class="ml-2">장바구니</span>
+                  </a>
+                </li>
+                {#if $userLevel === 0}
                   <li>
                     <a
-                      href="/about"
+                      href="/upload-product"
                       use:link
                       class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
-                      <i class="fas fa-heart" />
-                      <span class="ml-2">장바구니</span>
+                      <i class="fas fa-upload" />
+                      <span class="ml-2">업로드</span>
                     </a>
                   </li>
-                  {#if $userLevel === 0}
-                    <li>
-                      <a
-                        href="/upload-product"
-                        use:link
-                        class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
-                        <i class="fas fa-upload" />
-                        <span class="ml-2">업로드</span>
-                      </a>
-                    </li>
-                  {/if}
-                  <li>
-                    <div
-                      class="cursor-pointer hover:bg-gray-300 py-3 px-4 block"
-                      on:click={onClickLogout}>
-                      <i class="fas fa-sign-out-alt" />
-                      <span class="ml-2">로그아웃</span>
+                {/if}
+                <li>
+                  <div
+                    class="cursor-pointer hover:bg-gray-300 py-3 px-4 block"
+                    on:click={onClickLogout}>
+                    <i class="fas fa-sign-out-alt" />
+                    <span class="ml-2">로그아웃</span>
 
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            {/if}
-          {:else}
-            <a
-              href="/login"
-              use:link
-              class="bg-purple-500 hover:bg-purple-400 rounded px-4 py-2
-              text-white">
-              로그인
-            </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
           {/if}
+        {:else}
+          <a
+            href="/login"
+            use:link
+            class="bg-purple-500 hover:bg-purple-400 rounded px-4 py-2
+            text-white">
+            로그인
+          </a>
+        {/if}
 
-        </div>
-      {/if}
+      </div>
 
     </nav>
 

@@ -1,12 +1,13 @@
 <script>
   import { onMount } from "svelte";
-  import { userState, userLoding, userLevel } from "../store/UserStore";
+  import { siteOk } from "../store/SiteStore";
+  import { userState, userLevel } from "../store/UserStore";
 
   const getUser = async user => {
     const { claims } = await user.getIdTokenResult();
     $userState = user;
     $userLevel = claims.level;
-    $userLoding = true;
+    $siteOk = true;
   };
 
   // Client 환경에서 동작하도록 `onMount` 훅에서 실행합니다.
@@ -19,7 +20,7 @@
       } else {
         // 사용자가 없는 경우 초기화합니다.
         $userState = null;
-        $userLoding = true;
+        $siteOk = true;
       }
     });
   });

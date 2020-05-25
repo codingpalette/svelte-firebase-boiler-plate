@@ -7,17 +7,25 @@
   import PenButton from "../../components/PenButton.svelte";
   import FileUpload from "../../components/utils/FileUpload.svelte";
 
+  let backImg04 = "images/back_img04.jpg";
+  let backImg05 = "images/back_img05.jpg";
+  let backImg06 = "images/back_img06.jpg";
+
   // console.log(Swiper);
-  let mainModalSlideLists = [];
+  let mainModalSlideLists = [
+    { id: 1, src: backImg04 },
+    { id: 2, src: backImg05 },
+    { id: 3, src: backImg06 }
+  ];
   let slideModalOpen = false;
   let swiper;
 
   onMount(() => {
-    if ($siteState.mainSliders) {
-      mainModalSlideLists = $siteState.mainSliders;
-    } else {
-      mainModalSlideLists = [];
-    }
+    // if ($siteState.mainSliders) {
+    //   mainModalSlideLists = $siteState.mainSliders;
+    // } else {
+    //   mainModalSlideLists = [];
+    // }
     swiper = new Swiper(".swiper-container", {
       loop: true,
 
@@ -136,11 +144,11 @@
 </style>
 
 <div class="slide_container">
-  {#if $siteState.mainSliders && $siteState.mainSliders.length > 0}
+  {#if mainModalSlideLists.length > 0}
     <!-- Swiper -->
     <div class="swiper-container w-full h-full">
       <div class="swiper-wrapper">
-        {#each $siteState.mainSliders as list}
+        {#each mainModalSlideLists as list}
           <div class="swiper-slide flex items-center justify-center relative ">
             <img src={list.src} alt="" />
           </div>
@@ -159,7 +167,7 @@
         <i class="fas fa-chevron-right fa-lg" />
       </button>
 
-      <PenButton clickEvent={onClickslideModifyModalOpen} position />
+      <!-- <PenButton clickEvent={onClickslideModifyModalOpen} position /> -->
 
     </div>
   {:else}

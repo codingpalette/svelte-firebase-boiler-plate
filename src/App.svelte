@@ -35,8 +35,8 @@
 </script>
 
 <UserObserver />
-
-<Header />
 {#if $siteOk}
+  <Header />
+
   <Router {routes} />
 {/if}

@@ -1,6 +1,7 @@
 <script>
   import { productList } from "../../store/SiteStore";
   import { onMount } from "svelte";
+  import { link } from "svelte-spa-router";
   let item01 = "images/item_img01.jpg";
   let item02 = "images/item_img02.jpg";
   let item03 = "images/item_img03.jpg";
@@ -77,7 +78,7 @@
       {#each $productList as list}
         <li>
           <div class="p-4 box-border">
-            <a href="/" class="relative">
+            <a href="/product/{list.id}" use:link class="relative">
               <img src={list.productImages[0].src} alt="" />
             </a>
             <div class="item_text_box p-4">

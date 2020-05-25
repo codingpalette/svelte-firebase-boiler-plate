@@ -52,13 +52,15 @@
       mm = "0" + mm;
     }
 
-    let date, createdAt;
+    let date, createdAt, _name;
     if (Mode === "create") {
       date = yyyy + "-" + mm + "-" + dd;
       createdAt = today;
+      _name = yyyy + mm + dd;
     } else {
       date = formData.date;
       createdAt = formData.createdAt;
+      _name = formData._name;
     }
 
     const modifiedAt = today;
@@ -66,12 +68,13 @@
     formData.date = date;
     formData.createdAt = createdAt;
     formData.modifiedAt = modifiedAt;
+    formData._name = _name;
 
     const RandomNumber = Math.random()
       .toString(36)
       .substr(2, 11);
 
-    formData.id = `product${RandomNumber}${date}`;
+    formData.id = `product${RandomNumber}${_name}`;
 
     // console.log(formData);
 

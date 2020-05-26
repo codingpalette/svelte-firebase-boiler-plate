@@ -22,6 +22,11 @@
     count -= 1;
     totalCount = $productDetailItem.price * count;
   };
+  const onChangeCount = e => {
+    const target = Number(e.target.value);
+    count = target;
+    totalCount = $productDetailItem.price * count;
+  };
 </script>
 
 <style>
@@ -89,6 +94,7 @@
                 max="99"
                 step="1"
                 value={count}
+                on:change={onChangeCount}
                 class="count_input appearance-none block bg-gray-200
                 text-gray-700 border-2 border-gray-200 rounded leading-tight
                 focus:outline-none focus:bg-white focus:border-purple-500" />

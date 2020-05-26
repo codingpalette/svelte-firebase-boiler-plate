@@ -1,6 +1,7 @@
 <script>
   import SlideContainer from "../containers/home/SlideContainer.svelte";
-  import Section1Container from "../containers/Home/Section1Container.svelte";
+  import ShopContainer from "../containers/Home/ShopContainer.svelte";
+  import OurServicesContainer from "../containers/Home/OurServicesContainer.svelte";
 </script>
 
 <style>
@@ -8,11 +9,6 @@
 </style>
 
 <SlideContainer />
+<OurServicesContainer />
 
-<Section1Container />
-
-<div>Home</div>
-<button
-  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Button
-</button>
+<ShopContainer />

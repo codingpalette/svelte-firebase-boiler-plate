@@ -3,6 +3,11 @@
   export let section;
   export let maxitem;
   export let imageLists;
+  export let fullWidth;
+
+  const RandomNumber = Math.random()
+    .toString(36)
+    .substr(2, 11);
 
   const onChangeInput = async e => {
     // console.log(e.target.files);
@@ -44,6 +49,9 @@
     box-sizing: border-box;
     position: relative;
   }
+  .upload_image_list.fullWidth li {
+    width: 100%;
+  }
 
   .upload_image_list li button {
     position: absolute;
@@ -63,6 +71,10 @@
     width: 100%;
   }
 
+  .upload_image_list.fullWidth li .image_box:before {
+    display: none;
+  }
+
   .upload_image_list li .image_box img {
     position: absolute;
     width: 100%;
@@ -72,9 +84,17 @@
     transform: translate(-50%, -50%);
     object-fit: cover;
   }
+  .upload_image_list.fullWidth li .image_box img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    left: 0;
+    top: 0;
+    transform: translate(0);
+  }
 </style>
 
-<div class="upload_image_list">
+<div class="upload_image_list" class:fullWidth>
   <ul class="flex flex-wrap">
 
     {#each imageLists as list}
@@ -97,12 +117,12 @@
   {#if maxitem > imageLists.length}
     <input
       type="file"
-      id="slide_image_file"
+      id={RandomNumber}
       accept="image/*"
       class="hidden"
       on:change={onChangeInput} />
     <label
-      for="slide_image_file"
+      for={RandomNumber}
       class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4
       rounded inline-flex items-center cursor-pointer">
       <span>이미지 업로드</span>

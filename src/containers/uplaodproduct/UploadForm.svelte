@@ -11,7 +11,9 @@
     { id: 3, text: `과일` }
   ];
   let formData = {
-    productImages: [],
+    productCoverImages: [],
+    productMainImages: [],
+
     title: "",
     description: "",
     selected: questions[0].text,
@@ -109,10 +111,16 @@
 
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3">
+        <span
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold
+          mb-2"
+          for="name">
+          커버 이미지
+        </span>
         <FileUpload
           section="product"
-          maxitem="5"
-          bind:imageLists={formData.productImages} />
+          maxitem="1"
+          bind:imageLists={formData.productCoverImages} />
       </div>
     </div>
 
@@ -140,7 +148,7 @@
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold
           mb-2"
           for="description">
-          상품 설명
+          상품 간단 설명
         </label>
         <textarea
           class="appearance-none block w-full bg-gray-200 text-gray-700 border-2
@@ -190,6 +198,21 @@
           type="number"
           placeholder=""
           bind:value={formData.price} />
+      </div>
+    </div>
+    <div class="flex flex-wrap -mx-3 mb-6">
+      <div class="w-full px-3">
+        <span
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold
+          mb-2"
+          for="name">
+          상품 상세이미지
+        </span>
+        <FileUpload
+          section="product"
+          maxitem="1"
+          fullWidth
+          bind:imageLists={formData.productMainImages} />
       </div>
     </div>
     <button

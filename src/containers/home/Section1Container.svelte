@@ -82,7 +82,7 @@
             class="box-border rounded overflow-hidden border-solid border
             border-gray-300 shadow">
             <a href="/product/{list.id}" use:link class="relative">
-              <img src={list.productImages[0].src} alt="" />
+              <img src={list.productCoverImages[0].src} alt="" />
             </a>
             <div class="item_text_box p-4">
               <p class="item_tit my-2 text-sm text-gray-700 truncate">

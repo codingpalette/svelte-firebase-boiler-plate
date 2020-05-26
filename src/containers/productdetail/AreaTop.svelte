@@ -65,7 +65,9 @@
   <div
     class="area_top flex items-start justify-between max-w-screen-lg mt-24
     mr-auto ml-auto">
-    <div class="area_item">sfsdf</div>
+    <div class="area_item cover_image rounded overflow-hidden shadow">
+      <img src={$productDetailItem.productCoverImages[0].src} alt="" />
+    </div>
     <div class="area_item info">
       <div class="header">
         <h2 class="text-xl font-bold">{$productDetailItem.title}</h2>
@@ -83,7 +85,9 @@
           </li>
           <li class="item_price py-4 flex items-center">
             <strong class="text-sm font-normal">상품설명</strong>
-            <div class=" flex-1">{$productDetailItem.description}</div>
+            <div class=" flex-1 whitespace-pre-line">
+              {$productDetailItem.description}
+            </div>
           </li>
           <li class="item_price py-4 flex items-center">
             <strong class="text-sm font-normal">구입개수</strong>

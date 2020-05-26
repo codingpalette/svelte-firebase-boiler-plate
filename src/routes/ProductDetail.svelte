@@ -28,14 +28,3 @@
 </style>
 
 <AreaTop />
-
-<div>asdasda</div>
-<p>The current page is: {$location}</p>
-<p>The querystring is: {$querystring}</p>
-<p>
-  Your name is:
-  <b>{params.id}</b>
-  <b>
-    {#if params.last}{params.last}{/if}
-  </b>
-</p>

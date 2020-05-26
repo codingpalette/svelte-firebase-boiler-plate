@@ -36,11 +36,12 @@
     margin: 0;
   }
   .area_item {
-    width: 47.5%;
+    width: 100%;
   }
   .info .header {
     padding-bottom: 10px;
     border-bottom: 1.5px solid #707070;
+    margin-top: 1rem;
   }
   .area_list li {
     border-bottom: 1px solid #e9e9e9;
@@ -59,12 +60,25 @@
   .count_btn_box button {
     line-height: 1;
   }
+  .main_img_box img {
+    display: block;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 768px) {
+    .area_item {
+      width: 47.5%;
+    }
+    .info .header {
+      margin-top: 0;
+    }
+  }
 </style>
 
 {#if $productDetailItem}
   <div
     class="area_top flex items-start justify-between max-w-screen-lg mt-24
-    mr-auto ml-auto">
+    mr-auto ml-auto px-4 flex-wrap">
     <div class="area_item cover_image rounded overflow-hidden shadow">
       <img src={$productDetailItem.productCoverImages[0].src} alt="" />
     </div>
@@ -149,5 +163,8 @@
       </div>
 
     </div>
+  </div>
+  <div class="main_img_box max-w-screen-lg mt-24 mr-auto ml-auto px-4">
+    <img src={$productDetailItem.productMainImages[0].src} alt="" />
   </div>
 {/if}

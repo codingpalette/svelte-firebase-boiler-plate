@@ -1,11 +1,11 @@
 <script>
+  import { siteState, errorState, siteOk } from "./store/SiteStore";
   import { onMount, tick } from "svelte";
   import Router from "svelte-spa-router";
   import routes from "./routes";
   import UserObserver from "./components/UserObserver.svelte";
   import Header from "./components/Header.svelte";
-
-  import { siteState, errorState, siteOk } from "./store/SiteStore";
+  import Footer from "./components/Footer.svelte";
 
   // onMount(async () => {
   //   await firebase
@@ -37,6 +37,6 @@
 <UserObserver />
 {#if $siteOk}
   <Header />
-
   <Router {routes} />
+  <Footer />
 {/if}

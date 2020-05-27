@@ -2,6 +2,7 @@
   import { productList, productLast } from "../../store/SiteStore";
   import { onMount } from "svelte";
   import { link } from "svelte-spa-router";
+  import NotContent from "../../components/NotContent.svelte";
   let item01 = "images/item_img01.jpg";
   let item02 = "images/item_img02.jpg";
   let item03 = "images/item_img03.jpg";
@@ -12,9 +13,9 @@
       .firestore()
       .collection("products")
       .orderBy("createdAt", "desc")
-      .limit(3)
+      .limit(6)
       .get();
-    console.log(res);
+    // console.log(res);
 
     $productList = res.docs.map(e => e.data());
     $productLast = res.docs[res.docs.length - 1];
@@ -107,29 +108,36 @@
 </style>
 
 <div class="section1_container ">
-  <h2 class="pt-24 text-center text-3xl font-bold">
-    마음에 드는 식재료를 고르는것부터 시작해보세요
-  </h2>
+  <h2 class="pt-24 text-center text-3xl font-bold">OUR LATEST SHOP</h2>
   <div class="pt-4">
     <p class="text-sm text-center text-gray-600 leading-normal">
-      음식의 식재료는 중요하니깐.
+      Lorem, ipsum dolor.
     </p>
     <p class="text-sm text-center text-gray-600 leading-normal">
-      수많은 사람들의 선택한 신선한 식재료를 제공할 뿐이에요.
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
     </p>
   </div>
 
-  <div class="item_content max-w-screen-lg mt-24 mr-auto ml-auto">
-    <ul class="flex items-center flex-wrap">
-      {#each $productList as list}
-        <li class="p-4">
-          <dl>
-            <dt class="title pt-5 px-4 text-xl font-bold">{list.title}</dt>
+  <div class="item_content max-w-screen-lg mt-12 mr-auto ml-auto">
+    {#if $productList.length >= 1}
+      <div class="link_box text-center">
+        <a
+          href="/about/"
+          use:link
+          class="opacity-75 hover:opacity-100 hover:underline text-base">
+          VIEW ALL SHOP
+        </a>
+      </div>
+      <ul class="flex items-center flex-wrap">
 
-            <dd class="price px-4 pt-1 text-base">
-              {list.price.toLocaleString()}원
-            </dd>
-            <!-- <dd class="tag px-4 pt-1">
+        {#each $productList as list}
+          <li class="p-4">
+            <dl>
+              <dt class="title pt-5 px-4 text-xl font-bold">{list.title}</dt>
+              <dd class="price px-4 pt-1 text-base">
+                {list.price.toLocaleString()}원
+              </dd>
+              <!-- <dd class="tag px-4 pt-1">
               <span
                 class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm
                 font-semibold text-gray-700 mr-2">
@@ -141,26 +149,27 @@
                 상큼
               </span>
             </dd> -->
-            <dd class="img">
-              <a href="/product/{list.id}" use:link class="relative">
-                <figure>
-                  <img src={list.productCoverImages[0].src} alt="" />
-                </figure>
-              </a>
-            </dd>
-          </dl>
-        </li>
-      {/each}
-    </ul>
-    <div class="btn_box">
-      <button
-        type="button"
-        class="bg-purple-500 hover:bg-purple-400 rounded px-4 py-2 text-white"
-        on:click={onClickProductPlus}>
-        더보기
+              <dd class="img">
+                <a href="/product/{list.id}" use:link class="relative">
+                  <figure>
+                    <img src={list.productCoverImages[0].src} alt="" />
+                  </figure>
+                </a>
+              </dd>
+            </dl>
+          </li>
+        {/each}
+      </ul>
+
+      <!-- <div class="btn_box">
+      <button type="button" class="" on:click={onClickProductPlus}>
+        VIEW ALL SHOP
       </button>
 
-    </div>
+    </div> -->
+    {:else}
+      <NotContent />
+    {/if}
   </div>
 
 </div>

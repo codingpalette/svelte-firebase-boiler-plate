@@ -9,10 +9,8 @@
 </style>
 
 {#if $location !== '/login'}
-  <footer class="py-4 mt-4">
-    <div
-      class="footer_content max-w-screen-lg ml-auto mr-auto flex items-center
-      justify-between">
+  <footer class="p-4">
+    <div class="footer_content flex items-center justify-between">
       <div class="text_box text-gray-500 text-sm ml-auto">
         © 2020 · coding-palette
       </div>

@@ -19,17 +19,22 @@
     }
 
     const _name = file.name;
+    const RandomNumber = Math.random()
+      .toString(36)
+      .substr(2, 11);
     const storageRef = firebase.storage().ref();
-    const res = await storageRef.child(`site/${section}/${_name}`).put(file);
+    const res = await storageRef
+      .child(`site/${section}/${RandomNumber}-${_name}`)
+      .put(file);
     const url = await storageRef
-      .child(`site/${section}/${_name}`)
+      .child(`site/${section}/${RandomNumber}-${_name}`)
       .getDownloadURL();
     // console.log(url);
     imageLists = [
       ...imageLists,
       {
         src: url,
-        name: _name
+        name: `${RandomNumber}-${_name}`
       }
     ];
   };

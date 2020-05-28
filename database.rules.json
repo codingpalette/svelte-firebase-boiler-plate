@@ -3,6 +3,11 @@
     ".read": true,
     "site": {
       ".write": "root.child('users').child(auth.uid).child('level').val() == 0"
+    },
+    "users": {
+      "$uid": {
+        ".write": "auth != null && auth.uid == $uid || root.child('users').child(auth.uid).child('level').val() == 0"
+      }
     }
   }
 }

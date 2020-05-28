@@ -1,6 +1,5 @@
 <script>
   export let list;
-  console.log(list);
 </script>
 
 <style>

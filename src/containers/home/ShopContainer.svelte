@@ -2,6 +2,7 @@
   import { productList, productLast } from "../../store/SiteStore";
   import { onMount } from "svelte";
   import { link } from "svelte-spa-router";
+  import ShopItemList from "../../components/ShopItemList.svelte";
   import NotContent from "../../components/NotContent.svelte";
   let item01 = "images/item_img01.jpg";
   let item02 = "images/item_img02.jpg";
@@ -45,66 +46,12 @@
   });
 
   const onClickProductPlus = () => {
-    console.log("adas");
     productPlus($productLast);
   };
 </script>
 
 <style>
-  .item_content li {
-    width: 50%;
-  }
 
-  .item_content li a {
-    display: block;
-  }
-
-  .item_content li dl {
-    position: relative;
-    padding-top: 56.25%;
-  }
-
-  .item_content li dd.img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding-top: inherit;
-    overflow: hidden;
-  }
-  .item_content li dd.img a {
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding-top: inherit;
-  }
-
-  .item_content li dd.img a figure {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-  }
-
-  .item_content li dd.img a figure img {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-  }
-
-  @media screen and (min-width: 768px) {
-    .item_content li {
-      width: 33.33%;
-    }
-  }
 </style>
 
 <div class="section1_container ">
@@ -131,33 +78,7 @@
       <ul class="flex items-center flex-wrap">
 
         {#each $productList as list}
-          <li class="p-4">
-            <dl>
-              <dt class="title pt-5 px-4 text-xl font-bold">{list.title}</dt>
-              <dd class="price px-4 pt-1 text-base">
-                {list.price.toLocaleString()}원
-              </dd>
-              <!-- <dd class="tag px-4 pt-1">
-              <span
-                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm
-                font-semibold text-gray-700 mr-2">
-                과일
-              </span>
-              <span
-                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm
-                font-semibold text-gray-700 mr-2">
-                상큼
-              </span>
-            </dd> -->
-              <dd class="img">
-                <a href="/product/{list.id}" use:link class="relative">
-                  <figure>
-                    <img src={list.productCoverImages[0].src} alt="" />
-                  </figure>
-                </a>
-              </dd>
-            </dl>
-          </li>
+          <ShopItemList {list} />
         {/each}
       </ul>
 

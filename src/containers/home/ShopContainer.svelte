@@ -54,7 +54,7 @@
 
 </style>
 
-<div class="section1_container ">
+<section class="section1_container ">
   <h2 class="pt-24 text-center text-3xl font-bold">OUR LATEST SHOP</h2>
   <div class="pt-4">
     <p class="text-sm text-center text-gray-600 leading-normal">
@@ -93,4 +93,4 @@
     {/if}
   </div>
 
-</div>
+</section>

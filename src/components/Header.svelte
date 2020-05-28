@@ -232,9 +232,12 @@
               href="/"
               use:link
               use:active
-              class="p-4 hover:bg-gray-200 block"
+              class="p-4 hover:bg-gray-200 block flex items-center"
               on:click={onClickDrawerClose}>
-              home
+              <div class="icon_box w-8 text-center mr-2">
+                <i class="fas fa-home" />
+              </div>
+              <span>home</span>
             </a>
           </li>
           <li>
@@ -242,9 +245,26 @@
               href="/about"
               use:link
               use:active
-              class="p-4 hover:bg-gray-200 block"
+              class="p-4 hover:bg-gray-200 block flex items-center"
               on:click={onClickDrawerClose}>
-              about
+              <div class="icon_box w-8 text-center mr-2">
+                <i class="fas fa-lightbulb" />
+              </div>
+              <span>about</span>
+
+            </a>
+          </li>
+          <li>
+            <a
+              href="/shop"
+              use:link
+              use:active
+              class="p-4 hover:bg-gray-200 block flex items-center"
+              on:click={onClickDrawerClose}>
+              <div class="icon_box w-8 text-center mr-2">
+                <i class="fas fa-shopping-cart" />
+              </div>
+              <span>shop</span>
             </a>
           </li>
         </ul>

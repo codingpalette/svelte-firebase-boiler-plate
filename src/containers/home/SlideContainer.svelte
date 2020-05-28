@@ -143,7 +143,7 @@
   }
 </style>
 
-<div class="slide_container">
+<section class="slide_container">
   {#if mainModalSlideLists.length > 0}
     <!-- Swiper -->
     <div class="swiper-container w-full h-full">
@@ -222,4 +222,4 @@
         on:click={onClickSlideModifyModalClose} />
     </div>
   {/if}
-</div>
+</section>

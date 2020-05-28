@@ -51,7 +51,8 @@
 
 </style>
 
-<div class="our_services_container max-w-screen-lg mt-24 mr-auto ml-auto p-4">
+<section
+  class="our_services_container max-w-screen-lg mt-24 mr-auto ml-auto p-4">
   <h2 class="text-center text-3xl font-bold">OUR SERVICES</h2>
   <div class="pt-4">
     <p class="text-sm text-center text-gray-600 leading-normal">WELCOME</p>
@@ -61,4 +62,4 @@
       <ServicesList {list} />
     {/each}
   </ul>
-</div>
+</section>

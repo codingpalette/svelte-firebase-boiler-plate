@@ -9,7 +9,7 @@
 </style>
 
 {#if $location !== '/login'}
-  <footer class="p-4">
+  <footer class="p-4 mt-auto">
     <div class="footer_content flex items-center justify-between">
       <div class="text_box text-gray-500 text-sm ml-auto">
         © 2020 · coding-palette

@@ -1,5 +1,5 @@
 <script>
-  import { userLevel } from "../store/UserStore";
+  import { userState } from "../store/UserStore";
   export let clickEvent;
   export let position;
 </script>
@@ -12,7 +12,7 @@
   }
 </style>
 
-{#if $userLevel === 0}
+{#if $userState.level === 0}
   <button
     class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex items-center
     justify-center rounded-full ml-2 z-10"

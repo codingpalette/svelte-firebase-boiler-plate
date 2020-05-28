@@ -1,12 +1,17 @@
 <script>
   import { onMount } from "svelte";
   import { siteOk } from "../store/SiteStore";
-  import { userState, userLevel } from "../store/UserStore";
+  import { userState } from "../store/UserStore";
 
   const getUser = async user => {
-    const { claims } = await user.getIdTokenResult();
-    $userState = user;
-    $userLevel = claims.level;
+    // const { claims } = await user.getIdTokenResult();
+    const getToken = await user.getIdTokenResult();
+    const res = await firebase
+      .firestore()
+      .collection("users")
+      .doc(`${getToken.claims.user_id}`)
+      .get();
+    $userState = res.data();
     $siteOk = true;
   };
 

@@ -1,6 +1,7 @@
 <script>
-  import { siteState, errorState } from "../store/SiteStore";
-  import { userState, userLevel } from "../store/UserStore";
+  import { siteState, errorState, siteOk } from "../store/SiteStore";
+
+  import { userState } from "../store/UserStore";
   import { fly } from "svelte/transition";
   import { link, location } from "svelte-spa-router";
   import active from "svelte-spa-router/active";
@@ -37,7 +38,7 @@
 
   const onClickLogout = () => {
     firebase.auth().signOut();
-    $userLevel = null;
+    $userState = null;
   };
 
   const onClickTitleModify = async () => {
@@ -144,7 +145,7 @@
                     <span class="ml-2">장바구니</span>
                   </a>
                 </li>
-                {#if $userLevel === 0}
+                {#if $userState.level === 0}
                   <li>
                     <a
                       href="/upload-product"

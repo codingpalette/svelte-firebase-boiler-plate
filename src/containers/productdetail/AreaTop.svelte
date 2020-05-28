@@ -1,5 +1,6 @@
 <script>
   import { productDetailItem } from "../../store/SiteStore";
+  import { userState } from "../../store/UserStore";
 
   let count = 1;
   let totalCount;
@@ -26,6 +27,63 @@
     const target = Number(e.target.value);
     count = target;
     totalCount = $productDetailItem.price * count;
+  };
+
+  const onClickAddCart = async () => {
+    // console.log($productDetailItem);
+    // console.log($userState);
+    const db = firebase.firestore();
+    const realdb = firebase.database();
+    let duplicate = false;
+    let quantityNum = 0;
+    $userState.cart.forEach(item => {
+      if (item.id === $productDetailItem.id) {
+        duplicate = true;
+        quantityNum = item.quantity + count;
+      }
+    });
+
+    if (duplicate) {
+      //상품이 있을때
+      const upData = $userState.cart.map(v => {
+        if (v.id === $productDetailItem.id) {
+          v.quantity = quantityNum;
+        }
+        return v;
+      });
+      try {
+        await db
+          .collection("users")
+          .doc($userState.uid)
+          .update({
+            cart: upData
+          });
+        $userState.cart = upData;
+      } catch (e) {
+        console.log(e);
+      } finally {
+      }
+    } else {
+      // 상품이 없을때
+      try {
+        await db
+          .collection("users")
+          .doc($userState.uid)
+          .update({
+            cart: [
+              ...$userState.cart,
+              { id: $productDetailItem.id, quantity: count, date: Date.now() }
+            ]
+          });
+        $userState.cart = [
+          ...$userState.cart,
+          { id: $productDetailItem.id, quantity: count, date: Date.now() }
+        ];
+      } catch (e) {
+        console.log(e);
+      } finally {
+      }
+    }
   };
 </script>
 
@@ -157,7 +215,8 @@
           type="button"
           class="box-border text-white bg-gray-500 hover:bg-gray-400
           focus:shadow-outline focus:outline-none text-white font-bold py-3
-          rounded">
+          rounded"
+          on:click={onClickAddCart}>
           장바구니
         </button>
       </div>

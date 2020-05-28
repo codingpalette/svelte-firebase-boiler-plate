@@ -1,6 +1,5 @@
 <script>
   import { siteState, siteOk } from "../../store/SiteStore";
-  import { userLevel } from "../../store/UserStore";
   import { onMount } from "svelte";
   import Swiper from "swiper";
   let notSlide = "images/notslide.svg";

@@ -14,8 +14,8 @@
       .get();
     $productDetailItem = res.data();
 
-    console.log(res.data());
-    console.log($productDetailItem);
+    // console.log(res.data());
+    // console.log($productDetailItem);
   };
 
   onMount(() => {

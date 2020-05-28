@@ -1,5 +1,6 @@
 <script>
   import { errorState } from "../../store/SiteStore";
+  import { push } from "svelte-spa-router";
   import FileUpload from "../../components/utils/FileUpload.svelte";
   import Error from "../../components/Error.svelte";
 
@@ -21,6 +22,13 @@
   };
 
   const handleSubmit = async () => {
+    if (formData.productCoverImages.length !== 1) {
+      $errorState = {
+        open: true,
+        errorMessage: "커버이미지를 등록해주세요."
+      };
+      return false;
+    }
     if (formData.title === "") {
       $errorState = {
         open: true,
@@ -39,6 +47,13 @@
       $errorState = {
         open: true,
         errorMessage: "상품 가격을 입력해주세요."
+      };
+      return false;
+    }
+    if (formData.productMainImages.length !== 1) {
+      $errorState = {
+        open: true,
+        errorMessage: "메인이미지를 등록해주세요."
       };
       return false;
     }
@@ -86,6 +101,7 @@
         .collection("products")
         .doc(formData.id)
         .set(formData);
+      push("/");
     } catch (e) {
       console.log(e);
     }
@@ -157,6 +173,7 @@
           id="description"
           type="text"
           placeholder=""
+          maxlength="200"
           bind:value={formData.description} />
       </div>
     </div>

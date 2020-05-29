@@ -146,7 +146,7 @@
       </div>
       <div class="area_list">
         <ul>
-          <li class="item_price py-4 flex items-center">
+          <li class="item_box py-4 flex items-center">
             <strong class="text-sm font-normal">상품금액</strong>
             <div class="text-gray-500 font-bold flex-1">
               <span class="text-purple-500">
@@ -155,13 +155,13 @@
               원
             </div>
           </li>
-          <li class="item_price py-4 flex items-center">
+          <li class="item_box py-4 flex items-center">
             <strong class="text-sm font-normal">상품설명</strong>
             <div class=" flex-1 whitespace-pre-line">
               {$productDetailItem.description}
             </div>
           </li>
-          <li class="item_price py-4 flex items-center">
+          <li class="item_box py-4 flex items-center">
             <strong class="text-sm font-normal">구입개수</strong>
             <div class="flex-1 flex items-center justity-center">
               <input
@@ -194,7 +194,7 @@
               </div>
             </div>
           </li>
-          <li class="item_price py-4 flex items-center">
+          <li class="item_box py-4 flex items-center">
             <strong class="text-sm font-normal">합계금액</strong>
             <div class="text-gray-500 font-bold flex-1">
               <span class="text-purple-500">{totalCount.toLocaleString()}</span>

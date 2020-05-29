@@ -140,7 +140,7 @@
               <ul>
                 <li>
                   <a
-                    href="/about"
+                    href="/keep-products"
                     use:link
                     class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
                     <i class="fas fa-heart" />

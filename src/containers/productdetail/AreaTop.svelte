@@ -108,7 +108,7 @@
     width: 100px;
   }
   .area_btn_box button {
-    width: 47.5%;
+    width: 100%;
   }
   .count_input {
     width: 50px;
@@ -204,16 +204,16 @@
         </ul>
       </div>
       <div class="area_btn_box mt-4 flex items-center justify-between">
-        <button
+        <!-- <button
           type="button"
           class="box-border bg-purple-500 hover:bg-purple-400
           focus:shadow-outline focus:outline-none text-white font-bold py-3
           rounded">
           바로구매
-        </button>
+        </button> -->
         <button
           type="button"
-          class="box-border text-white bg-gray-500 hover:bg-gray-400
+          class="box-border text-white bg-purple-500 hover:bg-purple-400
           focus:shadow-outline focus:outline-none text-white font-bold py-3
           rounded"
           on:click={onClickAddCart}>

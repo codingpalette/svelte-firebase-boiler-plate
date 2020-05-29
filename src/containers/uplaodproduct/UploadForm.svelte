@@ -234,7 +234,8 @@
     </div>
     <button
       type="submit"
-      class="bg-purple-500 hover:bg-purple-400 rounded px-4 py-2 text-white">
+      class="bg-purple-500 hover:bg-purple-400 rounded px-4 py-2 text-white
+      focus:shadow-outline focus:outline-none">
       업로드
     </button>
 

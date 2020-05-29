@@ -38,7 +38,8 @@
     <div class="input_group mt-4">
       <button
         class="bg-white rounded w-full flex items-center justify-center py-2
-        border-solid border border-gray-300"
+        border-solid border border-gray-300 focus:shadow-outline
+        focus:outline-none"
         type="button"
         on:click={onClickGoogleLogin}>
         <i class="fab fa-google mr-4" />

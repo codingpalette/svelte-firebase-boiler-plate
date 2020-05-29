@@ -108,8 +108,9 @@
   <header class="sticky left-0 top-0 bg-white shadow z-10">
     <nav class="flex items-center flex-wrap p-3">
       <button
+        type="button"
         class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex items-center
-        justify-center rounded-full"
+        justify-center rounded-full focus:shadow-outline focus:outline-none"
         on:click={onClickDrawerOpen}>
         <i class="fas fa-bars" />
       </button>
@@ -126,8 +127,9 @@
       <div class="ml-auto relative">
         {#if $userState}
           <button
+            type="button"
             class="user_menu_btn h-10 w-10 flex items-center justify-center
-            overflow-hidden rounded-full"
+            overflow-hidden rounded-full focus:shadow-outline focus:outline-none"
             on:click={onClickUserMenuOpen}>
             <img class="user_image" src={$userState.photoURL} alt="" />
           </button>

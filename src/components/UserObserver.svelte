@@ -4,10 +4,10 @@
   import { userState } from "../store/UserStore";
 
   const getUser = async user => {
-    console.log(user);
+    // console.log(user);
     // const { claims } = await user.getIdTokenResult();
     const getToken = await user.getIdTokenResult();
-    console.log(getToken);
+    // console.log(getToken);
     const res = await firebase
       .firestore()
       .collection("users")

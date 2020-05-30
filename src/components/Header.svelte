@@ -105,7 +105,7 @@
 <svelte:window on:click={onClickWindow} />
 
 {#if $location !== '/login'}
-  <header class="sticky left-0 top-0 bg-white shadow z-10">
+  <header class="sticky left-0 top-0 bg-white shadow z-20">
     <nav class="flex items-center flex-wrap p-3">
       <button
         type="button"

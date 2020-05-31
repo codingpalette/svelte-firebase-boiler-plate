@@ -84,6 +84,21 @@
     width: 100%;
     height: 100%;
   }
+  .slide_content .text_box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.35);
+    text-align: center;
+  }
   @media screen and (min-width: 768px) {
     .slide_content {
       height: 640px;
@@ -97,6 +112,10 @@
       <div class="slide_content">
         <a href="/" use:link class="block relative w-full h-full">
           <img src={mainData.image[0].src} alt="" />
+          <div class="text_box p-4">
+            <strong class="text-4xl">{mainData.mainTitle}</strong>
+            <p class="text-lg">{mainData.subTitle}</p>
+          </div>
         </a>
       </div>
     {:else}

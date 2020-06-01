@@ -12,7 +12,7 @@
   }
 </style>
 
-{#if $userState.level === 0}
+{#if $userState !== null && $userState.level === 0}
   <button
     class="bg-white hover:bg-gray-300 text-black h-10 w-10 flex items-center
     justify-center rounded-full ml-2 z-10"

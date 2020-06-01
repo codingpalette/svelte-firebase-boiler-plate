@@ -1,5 +1,6 @@
 <script>
-  import { siteState, siteOk } from "../../store/SiteStore";
+  import { siteState } from "../../store/SiteStore";
+  // import { mainData, modalData } from "../../store/HomeStore";
   import { onMount } from "svelte";
   import { link } from "svelte-spa-router";
   import PenButton from "../../components/PenButton.svelte";
@@ -7,16 +8,20 @@
   import InputGroup from "../../components/utils/InputGroup.svelte";
   import NotContent from "../../components/NotContent.svelte";
 
+  let backImg = "images/back_img04.jpg";
+
   let loading = false;
   let mainData = {
-    mainTitle: "",
-    subTitle: "",
-    image: []
+    mainTitle: "What is Lorem Ipsum?",
+    subTitle:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: [{ name: "backImg", src: backImg }]
   };
   let modalData = {
-    mainTitle: "",
-    subTitle: "",
-    image: []
+    mainTitle: "What is Lorem Ipsum?",
+    subTitle:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: [{ name: "backImg", src: backImg }]
   };
 
   let slideModalOpen = false;
@@ -42,7 +47,11 @@
   };
 
   onMount(() => {
-    getMainImage();
+    if (mainData.image.length === 0) {
+      getMainImage();
+    } else {
+      loading = true;
+    }
   });
 
   const onClickModalOpen = () => {
@@ -110,7 +119,7 @@
   {#if loading}
     {#if mainData.image.length > 0}
       <div class="slide_content">
-        <a href="/" use:link class="block relative w-full h-full">
+        <a href="/about" use:link class="block relative w-full h-full">
           <img src={mainData.image[0].src} alt="" />
           <div class="text_box p-4">
             <strong class="text-4xl">{mainData.mainTitle}</strong>
@@ -124,7 +133,7 @@
       </div>
     {/if}
   {/if}
-  <PenButton position clickEvent={onClickModalOpen} />
+  <!-- <PenButton position clickEvent={onClickModalOpen} /> -->
 
   {#if slideModalOpen}
     <div

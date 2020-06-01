@@ -7,5 +7,5 @@
 
 </style>
 
-<TopImage />
+<!-- <TopImage /> -->
 <AboutContent />

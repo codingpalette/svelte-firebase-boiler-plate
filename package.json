@@ -22,7 +22,6 @@
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^2.2.0",
     "axios": "^0.19.2",
-    "jquery": "^3.5.1",
     "sirv-cli": "^0.4.4",
     "svelte-spa-router": "^2.1.0",
     "swiper": "^5.4.0"

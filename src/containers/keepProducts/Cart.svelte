@@ -2,7 +2,6 @@
   import { userState } from "../../store/UserStore";
   import { onMount } from "svelte";
   import { link } from "svelte-spa-router";
-  import axios from "axios";
 
   const IMP = window.IMP; // 생략가능
   IMP.init("imp18299152"); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
@@ -26,7 +25,7 @@
     return res.data();
   };
 
-  const getItems2 = async () => {
+  onMount(async () => {
     const res = await firebase
       .firestore()
       .collection("carts")
@@ -38,14 +37,10 @@
     res.docs.forEach(v => {
       data.push(v.data());
     });
-    return data;
-  };
-
-  onMount(async () => {
-    const res = await getItems2();
+    // console.log(data);
     // console.log(res);
-    if (res.length > 0) {
-      const promises = res.map(async item => {
+    if (data.length > 0) {
+      const promises = data.map(async item => {
         const res = await getItems(item);
         // const date = item.date;
         // const quantity = item.quantity;
@@ -61,7 +56,7 @@
         // console.log(cartItems);
       });
       await Promise.all(promises);
-      console.log(cartItems);
+      // console.log(cartItems);
       calculateTotal(cartItems);
       cartOk = true;
     } else {
@@ -74,7 +69,7 @@
     cartDetail.map(item => {
       total += parseInt(item.price, 10) * item.quantity;
     });
-    console.log(total);
+    // console.log(total);
     totalPrice = total;
   };
 
@@ -216,33 +211,7 @@
                   items-center justify-center rounded-full">
                   <i class="fas fa-times" />
                 </button>
-
               </div>
-
-              <!-- <div class="flex">
-                <div class="item_img">
-                  <img src={item.image} alt="" />
-                </div>
-                <div class="item_text_box">
-                  <h2 class="list text-xl flex items-center justify-between">
-                    <span class="">상품명</span>
-                    <a
-                      href="/product/{item.id}"
-                      use:link
-                      class="text-purple-500 hover:underline">
-                      {item.title}
-                    </a>
-                  </h2>
-                  <div class="list">
-                    <span>가격</span>
-                    <span>₩{item.price.toLocaleString()}</span>
-                  </div>
-                  <div class="list">
-                    <span>구입수량</span>
-                    <span>{item.quantity}</span>
-                  </div>
-                </div>
-              </div> -->
             </li>
           {/each}
         </ol>

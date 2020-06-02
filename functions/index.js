@@ -31,7 +31,6 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
     photoURL,
     disabled,
     createdAt: new Date().getMilliseconds(),
-    cart: [],
     history: [],
     level: claims.level,
   };

@@ -17,8 +17,8 @@ service cloud.firestore {
       allow write : if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.level == 0;
     }
     match /carts/{document=**}{
-      allow read : if resource.data.uid == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.level == 0;
-      allow write : if resource.data.uid == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.level == 0;
+      allow read : if request.auth.uid != null;
+      allow write : if request.auth.uid != null;
     }
    
   }

@@ -7,11 +7,6 @@
   const IMP = window.IMP; // 생략가능
   IMP.init("imp18299152"); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
-  const API = axios.create({
-    timeout: 50000,
-    headers: { "X-Custom-Header": "foobar" }
-  });
-
   let cartItems = [];
   let totalPrice = 0;
   let cartOk = false;
@@ -25,16 +20,32 @@
     const res = await firebase
       .firestore()
       .collection("products")
-      .doc(decodeURI(`${item.id}`))
+      .doc(decodeURI(`${item.pid}`))
       .get();
     // console.log(res.data());
     return res.data();
   };
 
+  const getItems2 = async () => {
+    const res = await firebase
+      .firestore()
+      .collection("carts")
+      .where("uid", "==", $userState.uid)
+      .get();
+    // console.log(res);
+    // console.log(res.docs[0].data());
+    let data = [];
+    res.docs.forEach(v => {
+      data.push(v.data());
+    });
+    return data;
+  };
+
   onMount(async () => {
-    if ($userState.cart.length > 0) {
-      console.log("상품이 있음");
-      const promises = $userState.cart.map(async item => {
+    const res = await getItems2();
+    // console.log(res);
+    if (res.length > 0) {
+      const promises = res.map(async item => {
         const res = await getItems(item);
         // const date = item.date;
         // const quantity = item.quantity;

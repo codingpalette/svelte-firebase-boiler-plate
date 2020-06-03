@@ -8,7 +8,7 @@
 
 </style>
 
-<div class="px-6 py-4">
+<div class="pb-4">
   <label
     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
     for={idValue}>

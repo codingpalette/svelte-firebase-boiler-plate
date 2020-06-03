@@ -4,6 +4,9 @@
   import { link } from "svelte-spa-router";
 
   import NotContent from "../../components/utils/NotContent.svelte";
+  import InputGroup from "../../components/utils/InputGroup.svelte";
+
+  let kakaopayIcon = "images/kakaopay.png";
 
   const IMP = window.IMP; // 생략가능
   IMP.init("imp18299152"); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
@@ -15,6 +18,12 @@
     user: [],
     data: [],
     product: []
+  };
+  let addressList = {
+    postcode: "",
+    road: "",
+    jibun: "",
+    detail: ""
   };
 
   const getItems = async item => {
@@ -67,6 +76,41 @@
     }
   });
 
+  onMount(() => {});
+
+  function addressEvent() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+        // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+        var roadAddr = data.roadAddress; // 도로명 주소 변수
+        var extraRoadAddr = ""; // 참고 항목 변수
+
+        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+        if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+          extraRoadAddr += data.bname;
+        }
+        // 건물명이 있고, 공동주택일 경우 추가한다.
+        if (data.buildingName !== "" && data.apartment === "Y") {
+          extraRoadAddr +=
+            extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
+        }
+        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+        if (extraRoadAddr !== "") {
+          extraRoadAddr = " (" + extraRoadAddr + ")";
+        }
+
+        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+        addressList.postcode = data.zonecode;
+        addressList.road = roadAddr;
+        addressList.jibun = data.jibunAddress;
+      }
+    }).open();
+  }
+
   const calculateTotal = cartDetail => {
     let total = 0;
     cartDetail.map(item => {
@@ -83,7 +127,7 @@
         pay_method: "card",
         merchant_uid: "merchant_" + new Date().getTime(),
         name: "주문명:결제테스트",
-        amount: 14000,
+        amount: totalPrice,
         buyer_email: "iamport@siot.do",
         buyer_name: "구매자이름",
         buyer_tel: "010-1234-5678",
@@ -139,9 +183,8 @@
   .item_list .card_box {
     width: 100%;
   }
-  .item_list .result_box {
+  .item_list .card_box li {
     width: 100%;
-    background-color: #fafafa;
   }
 
   @media screen and (min-width: 768px) {
@@ -151,6 +194,9 @@
     }
     .name_box {
       margin-left: 1rem;
+    }
+    .item_list .card_box li {
+      width: auto;
     }
     /* .item_list .card_box {
       width: 47.5%;
@@ -170,69 +216,104 @@
       </p>
     </div>
     {#if cartOk}
-      <div class="mt-12 pb-12 item_list flex justify-between flex-wrap">
+      <div class="mt-12 pb-12 item_list ">
         {#if cartItems.length > 0}
-          <ol class="card_box">
-            {#each cartItems as item}
-              <li class="flex items-center mb-8 ">
-                <div
-                  class="list_box overflow-hidden box-border flex-1 flex
-                  items-center flex-wrap">
-                  <div class="image_box rounded">
-                    <img src={item.image} alt="" />
-                  </div>
-                  <div class="name_box text-xl">
-                    <a
-                      href="/product/{item.id}"
-                      use:link
-                      class="text-purple-500 hover:text-purple-400 ">
-                      {item.title}
-                    </a>
-                  </div>
-                  <div class="count_box flex items-center justity-center ml-4">
-                    <span>{item.quantity}개</span>
+          <div class="cart_list_box">
+            <div class="title">
+              <h3 class="text-xl font-bold mb-4">상품리스트</h3>
+            </div>
+            <ol class="card_box flex items-center justify-between flex-wrap">
+              {#each cartItems as item}
+                <li class="flex items-center mb-8 ">
+                  <div
+                    class="list_box overflow-hidden box-border flex-1 flex
+                    items-center flex-wrap">
+                    <div class="image_box rounded">
+                      <img src={item.image} alt="" />
+                    </div>
+                    <div class="name_box text-xl">
+                      <a
+                        href="/product/{item.id}"
+                        use:link
+                        class="text-purple-500 hover:text-purple-400 ">
+                        {item.title}
+                      </a>
+                    </div>
+                    <div
+                      class="count_box flex items-center justity-center ml-4">
+                      <span>{item.quantity}개</span>
+                    </div>
+                    <div class="price_box ml-4 ">
+                      <span>₩{item.price.toLocaleString()}</span>
+                    </div>
                     <button
-                      type="button"
-                      class=" box-border px-2 ml-2 bg-gray-300 hover:bg-gray-400
-                      focus:shadow-outline focus:outline-none text-white
-                      font-bold rounded">
-                      <i class="fas fa-plus" />
+                      class="ml-4 hover:bg-gray-300 text-black h-10 w-10 flex
+                      items-center justify-center rounded-full">
+                      <i class="fas fa-times" />
                     </button>
-                    <button
-                      type="button"
-                      class=" box-border px-2 ml-2 bg-gray-300 hover:bg-gray-400
-                      focus:shadow-outline focus:outline-none text-white
-                      font-bold rounded">
-                      <i class="fas fa-minus" />
-                    </button>
+                  </div>
+                </li>
+              {/each}
+            </ol>
+          </div>
 
-                  </div>
-                  <div class="price_box ml-4 ">
-                    <span>₩{item.price.toLocaleString()}</span>
-                  </div>
-                  <button
-                    class="ml-4 hover:bg-gray-300 text-black h-10 w-10 flex
-                    items-center justify-center rounded-full">
-                    <i class="fas fa-times" />
-                  </button>
-                </div>
-              </li>
-            {/each}
-          </ol>
-          <div class="result_box p-4">
-            <div class="total_price">
+          <div class="address_box py-4">
+            <div class="title">
+              <h3 class="text-xl font-bold mb-4">주소</h3>
+            </div>
+            <button
+              on:click={addressEvent}
+              type="button"
+              class="box-border text-white bg-purple-500 hover:bg-purple-400
+              focus:shadow-outline focus:outline-none text-white font-bold
+              text-sm py-2 px-4 mb-4 rounded ">
+              주소찾기
+            </button>
+            <InputGroup
+              labelTxt="우편번호"
+              idValue="address_postcode"
+              bind:valueData={addressList.postcode} />
+            <InputGroup
+              labelTxt="도로명주소"
+              idValue="address_road"
+              bind:valueData={addressList.road} />
+            <InputGroup
+              labelTxt="지번주소"
+              idValue="address_jibun"
+              bind:valueData={addressList.jibun} />
+            <InputGroup
+              labelTxt="상세주소"
+              idValue="address_jibun"
+              bind:valueData={addressList.jibun} />
+          </div>
+          <div class="result_box ">
+            <div class="title">
+              <h3 class="text-xl font-bold mb-4">결제방법</h3>
+            </div>
+            <div class="total_price mb-4">
               <span>총 결제금액</span>
               <span>₩{totalPrice}</span>
             </div>
             <div class="btn_box">
-              <button
-                type="button"
-                class="box-border text-white bg-purple-500 hover:bg-purple-400
-                focus:shadow-outline focus:outline-none text-white font-bold
-                py-3 rounded w-full"
-                on:click={kakaoPay}>
-                결제하기
-              </button>
+              <div class="mb-4">
+                <button
+                  type="button"
+                  class="bg-transparent py-2 px-4 rounded border border-gray-400
+                  focus:shadow-none focus:outline-none"
+                  on:click={kakaoPay}>
+                  <img src={kakaopayIcon} alt="" />
+                </button>
+              </div>
+              <div class="mb-4">
+                <button
+                  type="button"
+                  class="box-border text-white bg-purple-500 hover:bg-purple-400
+                  focus:shadow-none focus:outline-none text-white font-bold
+                  text-sm py-2 px-4 rounded">
+                  일반 결제하기
+                </button>
+              </div>
+
             </div>
           </div>
         {:else}

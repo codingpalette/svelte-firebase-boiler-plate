@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import { link } from "svelte-spa-router";
   import ShopItemList from "../../components/ShopItemList.svelte";
-  import NotContent from "../../components/NotContent.svelte";
+  import NotContent from "../../components/utils/NotContent.svelte";
   let item01 = "images/item_img01.jpg";
   let item02 = "images/item_img02.jpg";
   let item03 = "images/item_img03.jpg";
@@ -89,7 +89,7 @@
 
     </div> -->
     {:else}
-      <NotContent />
+      <NotContent text="상품이 없습니다." />
     {/if}
   </div>
 

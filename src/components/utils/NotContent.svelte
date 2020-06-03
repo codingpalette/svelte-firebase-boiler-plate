@@ -1,4 +1,5 @@
 <script>
+  export let text;
   let notcontent = "images/notcontent.svg";
 </script>
 
@@ -18,7 +19,7 @@
     class="content_box w-full h-full flex items-center justify-center flex-col
     relative ">
     <img src={notcontent} alt="" class="w-full h-auto " />
-    <p class="text-xl font-bold text-purple-500 mt-8">NOT CONTENT</p>
+    <p class="text-xl font-bold text-purple-500 mt-8">{text}</p>
   </div>
 
 </div>

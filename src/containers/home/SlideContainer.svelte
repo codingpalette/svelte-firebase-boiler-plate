@@ -6,7 +6,7 @@
   import PenButton from "../../components/PenButton.svelte";
   import FileUpload from "../../components/utils/FileUpload.svelte";
   import InputGroup from "../../components/utils/InputGroup.svelte";
-  import NotContent from "../../components/NotContent.svelte";
+  import NotContent from "../../components/utils/NotContent.svelte";
 
   let backImg = "images/back_img04.jpg";
 
@@ -129,7 +129,7 @@
       </div>
     {:else}
       <div class="py-4 box-border">
-        <NotContent />
+        <NotContent text="이미지가 없습니다." />
       </div>
     {/if}
   {/if}

@@ -3,6 +3,8 @@
   import { onMount } from "svelte";
   import { link } from "svelte-spa-router";
 
+  import NotContent from "../../components/utils/NotContent.svelte";
+
   const IMP = window.IMP; // 생략가능
   IMP.init("imp18299152"); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
@@ -61,6 +63,7 @@
       cartOk = true;
     } else {
       console.log("상품이 없음");
+      cartOk = true;
     }
   });
 
@@ -168,69 +171,73 @@
     </div>
     {#if cartOk}
       <div class="mt-12 pb-12 item_list flex justify-between flex-wrap">
-        <ol class="card_box">
-          {#each cartItems as item}
-            <li class="flex items-center mb-8 ">
-              <div
-                class="list_box overflow-hidden box-border flex-1 flex
-                items-center flex-wrap">
-                <div class="image_box rounded">
-                  <img src={item.image} alt="" />
-                </div>
-                <div class="name_box text-xl">
-                  <a
-                    href="/product/{item.id}"
-                    use:link
-                    class="text-purple-500 hover:text-purple-400 ">
-                    {item.title}
-                  </a>
-                </div>
-                <div class="count_box flex items-center justity-center ml-4">
-                  <span>{item.quantity}개</span>
-                  <button
-                    type="button"
-                    class=" box-border px-2 ml-2 bg-gray-300 hover:bg-gray-400
-                    focus:shadow-outline focus:outline-none text-white font-bold
-                    rounded">
-                    <i class="fas fa-plus" />
-                  </button>
-                  <button
-                    type="button"
-                    class=" box-border px-2 ml-2 bg-gray-300 hover:bg-gray-400
-                    focus:shadow-outline focus:outline-none text-white font-bold
-                    rounded">
-                    <i class="fas fa-minus" />
-                  </button>
+        {#if cartItems.length > 0}
+          <ol class="card_box">
+            {#each cartItems as item}
+              <li class="flex items-center mb-8 ">
+                <div
+                  class="list_box overflow-hidden box-border flex-1 flex
+                  items-center flex-wrap">
+                  <div class="image_box rounded">
+                    <img src={item.image} alt="" />
+                  </div>
+                  <div class="name_box text-xl">
+                    <a
+                      href="/product/{item.id}"
+                      use:link
+                      class="text-purple-500 hover:text-purple-400 ">
+                      {item.title}
+                    </a>
+                  </div>
+                  <div class="count_box flex items-center justity-center ml-4">
+                    <span>{item.quantity}개</span>
+                    <button
+                      type="button"
+                      class=" box-border px-2 ml-2 bg-gray-300 hover:bg-gray-400
+                      focus:shadow-outline focus:outline-none text-white
+                      font-bold rounded">
+                      <i class="fas fa-plus" />
+                    </button>
+                    <button
+                      type="button"
+                      class=" box-border px-2 ml-2 bg-gray-300 hover:bg-gray-400
+                      focus:shadow-outline focus:outline-none text-white
+                      font-bold rounded">
+                      <i class="fas fa-minus" />
+                    </button>
 
+                  </div>
+                  <div class="price_box ml-4 ">
+                    <span>₩{item.price.toLocaleString()}</span>
+                  </div>
+                  <button
+                    class="ml-4 hover:bg-gray-300 text-black h-10 w-10 flex
+                    items-center justify-center rounded-full">
+                    <i class="fas fa-times" />
+                  </button>
                 </div>
-                <div class="price_box ml-4 ">
-                  <span>₩{item.price.toLocaleString()}</span>
-                </div>
-                <button
-                  class="ml-4 hover:bg-gray-300 text-black h-10 w-10 flex
-                  items-center justify-center rounded-full">
-                  <i class="fas fa-times" />
-                </button>
-              </div>
-            </li>
-          {/each}
-        </ol>
-        <div class="result_box p-4">
-          <div class="total_price">
-            <span>총 결제금액</span>
-            <span>₩{totalPrice}</span>
+              </li>
+            {/each}
+          </ol>
+          <div class="result_box p-4">
+            <div class="total_price">
+              <span>총 결제금액</span>
+              <span>₩{totalPrice}</span>
+            </div>
+            <div class="btn_box">
+              <button
+                type="button"
+                class="box-border text-white bg-purple-500 hover:bg-purple-400
+                focus:shadow-outline focus:outline-none text-white font-bold
+                py-3 rounded w-full"
+                on:click={kakaoPay}>
+                결제하기
+              </button>
+            </div>
           </div>
-          <div class="btn_box">
-            <button
-              type="button"
-              class="box-border text-white bg-purple-500 hover:bg-purple-400
-              focus:shadow-outline focus:outline-none text-white font-bold py-3
-              rounded w-full"
-              on:click={kakaoPay}>
-              결제하기
-            </button>
-          </div>
-        </div>
+        {:else}
+          <NotContent text="장바구니가 비어있습니다." />
+        {/if}
       </div>
     {/if}
 

@@ -1,7 +1,6 @@
 <script>
     import {siteState, errorState, siteOk} from "../store/SiteStore";
     import {userState} from "../store/UserStore";
-    import {productState} from "../store/ProductStore";
     import {fly} from "svelte/transition";
     import {link, location } from "svelte-spa-router";
     import active from "svelte-spa-router/active";

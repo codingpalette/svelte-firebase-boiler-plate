@@ -85,7 +85,7 @@
   .slide_content {
     height: 480px;
   }
-  .slide_content a img {
+  .slide_content .item_box img {
     object-fit: cover;
     position: absolute;
     left: 0;
@@ -119,13 +119,13 @@
   {#if loading}
     {#if mainData.image.length > 0}
       <div class="slide_content">
-        <a href="/about" use:link class="block relative w-full h-full">
+        <div class="item_box block relative w-full h-full">
           <img src={mainData.image[0].src} alt="" />
           <div class="text_box p-4">
             <strong class="text-4xl">{mainData.mainTitle}</strong>
             <p class="text-lg">{mainData.subTitle}</p>
           </div>
-        </a>
+        </div>
       </div>
     {:else}
       <div class="py-4 box-border">

@@ -1,6 +1,5 @@
 <script>
     import {errorState} from "../../store/SiteStore";
-    import {productState} from "../../store/ProductStore";
     import { onMount } from "svelte";
     import {push , querystring} from "svelte-spa-router";
     import qs from 'qs';
@@ -17,24 +16,30 @@
     let formData = {
         productCoverImages: [],
         productMainImages: [],
-
         title: "",
         description: "",
         selected: questions[0].text,
         price: ""
     };
 
+    const getData = async (id) => {
+        const res = await firebase.firestore().collection("products").doc(decodeURI(id)).get();
+        // console.log(res.data())
+        formData = res.data()
+    }
+
     onMount(() => {
         // console.log($querystring)
         const query = qs.parse($querystring);
-        console.log(query)
+        // console.log(query)
         if (query.id) {
-            console.log('수정모드')
+            getData(query.id)
+            Mode = 'modify'
         }
     })
 
     const handleSubmit = async () => {
-        return false;
+
         if (formData.productCoverImages.length !== 1) {
             $errorState = {
                 open: true,
@@ -100,20 +105,16 @@
         formData.modifiedAt = modifiedAt;
         formData._name = _name;
 
-        const RandomNumber = Math.random()
-                .toString(36)
-                .substr(2, 11);
+        if (Mode === 'create') {
+            const RandomNumber = Math.random().toString(36).substr(2, 11);
+            formData.id = `product${RandomNumber}${_name}`;
+        }
 
-        formData.id = `product${RandomNumber}${_name}`;
 
         // console.log(formData);
 
         try {
-            await firebase
-                    .firestore()
-                    .collection("products")
-                    .doc(formData.id)
-                    .set(formData);
+            await firebase.firestore().collection("products").doc(formData.id).set(formData);
             push("/");
         } catch (e) {
             console.log(e);

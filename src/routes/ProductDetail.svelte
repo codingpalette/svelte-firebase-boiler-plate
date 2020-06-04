@@ -1,7 +1,7 @@
 <script>
   import { productDetailItem } from "../store/SiteStore";
   import { onMount } from "svelte";
-  import { location, querystring } from "svelte-spa-router";
+  import { link ,location, querystring } from "svelte-spa-router";
   import AreaTop from "../containers/productdetail/AreaTop.svelte";
 
   export let params = {};
@@ -27,4 +27,5 @@
 
 </style>
 
+<!--<AdminHeader />-->
 <AreaTop />

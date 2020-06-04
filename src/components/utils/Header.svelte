@@ -1,10 +1,10 @@
 <script>
-    import {siteState, errorState, siteOk} from "../store/SiteStore";
-    import {userState} from "../store/UserStore";
+    import {siteState, errorState, siteOk} from "../../store/SiteStore";
+    import {userState} from "../../store/UserStore";
     import {fly} from "svelte/transition";
     import {link, location } from "svelte-spa-router";
     import active from "svelte-spa-router/active";
-    import PenButton from "./PenButton.svelte";
+    import PenButton from "../PenButton.svelte";
 
     let logo = "images/svelte-logo.svg";
     let drawerOpen = false;

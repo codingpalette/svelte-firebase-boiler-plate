@@ -1,7 +1,7 @@
 <script>
     import {onMount} from "svelte";
-    import {siteOk} from "../store/SiteStore";
-    import {userState} from "../store/UserStore";
+    import {siteOk} from "../../store/SiteStore";
+    import {userState} from "../../store/UserStore";
 
     const getUser = async user => {
         // console.log(user);

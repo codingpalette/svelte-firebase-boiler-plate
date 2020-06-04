@@ -2,7 +2,7 @@
     import {siteState, errorState, siteOk} from "../../store/SiteStore";
     import {userState} from "../../store/UserStore";
     import {fly} from "svelte/transition";
-    import {link, location } from "svelte-spa-router";
+    import {link, location} from "svelte-spa-router";
     import active from "svelte-spa-router/active";
     import PenButton from "../PenButton.svelte";
 
@@ -137,6 +137,12 @@
                                         <a href="/upload-product" use:link class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
                                             <i class="fas fa-upload"></i>
                                             <span class="ml-2">업로드</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/member-list" use:link class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
+                                            <i class="fas fa-users"></i>
+                                            <span class="ml-2">회원정보</span>
                                         </a>
                                     </li>
                                 {/if}

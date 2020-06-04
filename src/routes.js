@@ -7,6 +7,7 @@ import Shop from './routes/Shop.svelte';
 import ProductDetail from './routes/ProductDetail.svelte';
 import KeepProducts from './routes/KeepProducts.svelte';
 import UplaodProduct from './routes/UplaodProduct.svelte';
+import MemberList from './routes/MemberList.svelte';
 
 const routes = {
   '/': Home,
@@ -16,6 +17,7 @@ const routes = {
   '/product/:id': ProductDetail,
   '/upload-product': UplaodProduct,
   '/keep-products': KeepProducts,
+  '/member-list': MemberList
 };
 
 export default routes;

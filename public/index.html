@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+    <!-- CODELAB: Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <!-- CODELAB: Add description here -->
+    <meta name="description" content="A sample weather app">
+    <!-- CODELAB: Add meta theme-color -->
+    <meta name="theme-color" content="#fff" />
+
+    <script>
+        // CODELAB: Register service worker.
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((reg) => {
+                        // console.log('Service worker registered.', reg);
+                    });
+            });
+        }
+    </script>
+
+
 
     <title>Svelte app</title>
 
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="stylesheet" href="/global.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css" />
-    <link rel="stylesheet" href="/build/bundle.css" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="icon" type="image/png" href="/favicon.png"/>
+
+    <link rel="stylesheet" href="/global.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css"/>
+    <link rel="stylesheet" href="/build/bundle.css"/>
+    <link rel="stylesheet" href="index.css"/>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script defer src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
@@ -30,7 +54,12 @@
     <script defer src="./init-firebase.js"></script>
 
     <script defer src="/build/bundle.js"></script>
-  </head>
+    <!-- CODELAB: Add link rel manifest -->
+    <link rel="manifest" href="/manifest.json">
 
-  <body></body>
+    <!-- CODELAB: Add the install script here -->
+    <script defer src="/install.js"></script>
+</head>
+
+<body></body>
 </html>

@@ -14,9 +14,23 @@
         width: 100%;
         min-height: 100vh;
     }
+
+    #install-button{
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+    }
 </style>
 
 <UserObserver/>
+
+
+<div id="install-button" class="z-40" hidden >
+    <button class="h-10 w-10 flex items-center justify-center overflow-hidden rounded-full focus:shadow-none focus:outline-none bg-gray-100">
+        <i class="fas fa-download"></i>
+    </button>
+</div>
+
 {#if $siteOk}
     <div id="app">
         <Header/>

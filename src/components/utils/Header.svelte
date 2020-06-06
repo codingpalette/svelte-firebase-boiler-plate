@@ -133,20 +133,6 @@
                                         <span class="ml-2">장바구니</span>
                                     </a>
                                 </li>
-                                {#if $userState.level === 0}
-                                    <li>
-                                        <a href="/upload-product" use:link class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
-                                            <i class="fas fa-upload"></i>
-                                            <span class="ml-2">업로드</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/member-list" use:link class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
-                                            <i class="fas fa-users"></i>
-                                            <span class="ml-2">회원정보</span>
-                                        </a>
-                                    </li>
-                                {/if}
                                 <li>
                                     <div class="cursor-pointer hover:bg-gray-300 py-3 px-4 block" on:click={onClickLogout}>
                                         <i class="fas fa-sign-out-alt"></i>
@@ -196,7 +182,7 @@
 
         {#if drawerOpen}
             <div class="drawer_container fixed left-0 top-0 w-full h-full z-30">
-                <ul class="drawer_ul bg-white relative h-screen z-10 py-4" transition:fly={{ x: -250, duration: 500 }}>
+                <ul class="drawer_ul bg-white relative h-screen z-10 py-4 flex flex-col" transition:fly={{ x: -250, duration: 500 }}>
                     <li>
                         <a href="/" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
                             <div class="icon_box w-8 text-center mr-2">
@@ -220,6 +206,32 @@
                             </div>
                             <span>shop</span>
                         </a>
+                    </li>
+                    {#if $userState.level === 0}
+                        <li class="mt-4">
+                            <div class="p-4 text-black text-opacity-50 text-xs">
+                                관리자 메뉴
+                            </div>
+                        </li>
+                        <li>
+                            <a href="/upload-product" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                                <div class="icon_box w-8 text-center mr-2">
+                                    <i class="fas fa-upload"></i>
+                                </div>
+                                <span>업로드</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/member-list" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                                <div class="icon_box w-8 text-center mr-2">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <span>회원정보</span>
+                            </a>
+                        </li>
+                    {/if}
+                    <li class="mt-auto">
+                        sdfds
                     </li>
                 </ul>
                 <div class="drawer_back bg-gray-800 opacity-50 absolute left-0 top-0 w-full h-full" on:click={onClickDrawerClose}></div>

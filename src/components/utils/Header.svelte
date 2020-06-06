@@ -182,21 +182,13 @@
 
         {#if drawerOpen}
             <div class="drawer_container fixed left-0 top-0 w-full h-full z-30">
-                <ul class="drawer_ul bg-white relative h-screen z-10 py-4 flex flex-col" transition:fly={{ x: -250, duration: 500 }}>
+                <ul class="drawer_ul bg-white relative h-screen z-10 py-4 flex flex-col overflow-y-auto" transition:fly={{ x: -250, duration: 500 }}>
                     <li>
                         <a href="/" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
                             <div class="icon_box w-8 text-center mr-2">
                                 <i class="fas fa-home"></i>
                             </div>
-                            <span>home</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
-                            <div class="icon_box w-8 text-center mr-2">
-                                <i class="fas fa-lightbulb"></i>
-                            </div>
-                            <span>about</span>
+                            <span>홈</span>
                         </a>
                     </li>
                     <li>
@@ -204,9 +196,98 @@
                             <div class="icon_box w-8 text-center mr-2">
                                 <i class="fas fa-shopping-cart"></i>
                             </div>
-                            <span>shop</span>
+                            <span>샵</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/about" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <span>회사소개</span>
+                        </a>
+                    </li>
+
                     {#if $userState.level === 0}
                         <li class="mt-4">
                             <div class="p-4 text-black text-opacity-50 text-xs">
@@ -214,7 +295,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href="/upload-product" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <a href="/upload-product" use:link  class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
                                 <div class="icon_box w-8 text-center mr-2">
                                     <i class="fas fa-upload"></i>
                                 </div>
@@ -222,16 +303,29 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/member-list" use:link use:active class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <a href="/member-list" use:link  class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
                                 <div class="icon_box w-8 text-center mr-2">
                                     <i class="fas fa-users"></i>
                                 </div>
                                 <span>회원정보</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="/upload-product" use:link  class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                                <div class="icon_box w-8 text-center mr-2">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <span>상품관리</span>
+                            </a>
+                        </li>
                     {/if}
                     <li class="mt-auto">
-                        sdfds
+                        <button class="p-4 hover:bg-gray-200 block flex items-center w-full">
+                            <div class="icon_box w-8 text-center mr-2">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <span>앱 다운로드</span>
+                        </button>
                     </li>
                 </ul>
                 <div class="drawer_back bg-gray-800 opacity-50 absolute left-0 top-0 w-full h-full" on:click={onClickDrawerClose}></div>

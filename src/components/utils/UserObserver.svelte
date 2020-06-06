@@ -10,6 +10,7 @@
         // console.log(getToken);
         const res = await firebase.firestore().collection("users").doc(`${getToken.claims.user_id}`).get();
         // console.log(res.data())
+        // console.log(res)
         $userState = res.data();
         // console.log($userState)
         $siteOk = true;
@@ -23,7 +24,7 @@
                 // 쓰기 가능한 객체이기 때문에 바로 사용자를 할당할 수 있습니다.
                 getUser(user);
             } else {
-                // 사용자가 없는 경우 초기화합니다.
+                // 사용자가 없는 경우 초기화합니다.공
                 $userState = null;
                 $siteOk = true;
             }

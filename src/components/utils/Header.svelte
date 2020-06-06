@@ -5,6 +5,7 @@
     import {link, location} from "svelte-spa-router";
     import active from "svelte-spa-router/active";
     import PenButton from "../PenButton.svelte";
+    import Button from '../utils/Button.svelte'
 
     let logo = "images/svelte-logo.svg";
     let drawerOpen = false;
@@ -156,8 +157,8 @@
                         </div>
                     {/if}
                 {:else}
-                    <a href="/login" use:link class="bg-purple-500 hover:bg-purple-400 rounded px-4 py-2 text-white">
-                        로그인
+                    <a href="/login" use:link>
+                        <Button>로그인</Button>
                     </a>
                 {/if}
             </div>

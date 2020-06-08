@@ -1,6 +1,6 @@
 <script>
     export let width = undefined;
-    export let clickEvent = undefined;;
+    export let clickEvent = undefined;
 </script>
 
 <style>

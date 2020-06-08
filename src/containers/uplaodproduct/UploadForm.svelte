@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
     import {push , querystring} from "svelte-spa-router";
     import qs from 'qs';
+    import SectionLayout from '../../components/layout/SectionLayout.svelte'
     import FileUpload from "../../components/utils/FileUpload.svelte";
     import Error from "../../components/Error.svelte";
 
@@ -132,11 +133,7 @@
     }
 </style>
 
-<div class="upload_product_container max-w-screen-md my-8 ml-auto mr-auto">
-    <div class="text-center mb-8">
-        <h2 class="text-4xl">상품 업로드</h2>
-    </div>
-
+<SectionLayout Title="상품 업로드" subTitle="상품 업로드 페이지입니다.">
     <form on:submit|preventDefault={handleSubmit}>
 
         <div class="flex flex-wrap -mx-3 mb-6">
@@ -203,6 +200,7 @@
         </button>
 
     </form>
-</div>
+</SectionLayout>
+
 
 <Error backcolor="red"/>

@@ -1,6 +1,7 @@
 <script>
     import {onMount} from "svelte";
     import {link} from "svelte-spa-router";
+    import SectionLayout from '../../components/layout/SectionLayout.svelte'
     import Button from '../../components/utils/Button.svelte'
 
     let productList = []
@@ -86,20 +87,13 @@
 
 </style>
 
-<section class="px-4 box-border">
-    <div class="max-w-screen-lg pt-12 md:pt-24 mr-auto ml-auto">
-        <h2 class=" text-center text-3xl font-bold">상품정보</h2>
-        <div class="pt-4 pb-12 header_text_box">
-            <p class="text-sm text-center text-gray-600 leading-normal">
-                상품 리스트가 나옵니다.
-            </p>
-        </div>
-        <div class="text-right mb-4">
-            <a href="/upload-product" use:link>
-                <Button  clickEvent={onClickProductAddModal}>상품등록</Button>
-            </a>
-        </div>
-        {#if productList.length >= 1}
+<SectionLayout Title="상품정보" subTitle="상품정보 리스트입니다.">
+    <div class="text-right mb-4">
+        <a href="/upload-product" use:link>
+            <Button  clickEvent={onClickProductAddModal}>상품등록</Button>
+        </a>
+    </div>
+    {#if productList.length >= 1}
         <div class="w-full rounded overflow-hidden shadow-lg">
             <table class="table_content">
                 <thead>
@@ -113,42 +107,41 @@
                 <tbody>
                 {#each productList as list}
 
-                <tr>
-                    <td>
-                        <div class="wrapper">
-                            {list.title}
-                        </div>
-
-                    </td>
-                    <td>
-                        <div class="wrapper">
-                            <div class="image_box h-10 w-10 flex items-center justify-center overflow-hidden rounded-full relative">
-                                <img src="{list.productCoverImages[0].src}" alt="">
+                    <tr>
+                        <td>
+                            <div class="wrapper">
+                                {list.title}
                             </div>
-                        </div>
 
-                    </td>
-                    <td class="price">
-                        <div class="wrapper">
-                            {list.price}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="button_box flex items-center justify-end">
-                            <a href="/upload-product?id={list.id}" use:link class="text-black text-opacity-50 hover:text-opacity-100">
-                                수정
-                            </a>
-                            <button class="text-black text-opacity-50 hover:text-opacity-100 focus:shadow-none focus:outline-none ml-4">삭제</button>
-                        </div>
-                    </td>
+                        </td>
+                        <td>
+                            <div class="wrapper">
+                                <div class="image_box h-10 w-10 flex items-center justify-center overflow-hidden rounded-full relative">
+                                    <img src="{list.productCoverImages[0].src}" alt="">
+                                </div>
+                            </div>
 
-                </tr>
+                        </td>
+                        <td class="price">
+                            <div class="wrapper">
+                                {list.price}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="button_box flex items-center justify-end">
+                                <a href="/upload-product?id={list.id}" use:link class="text-black text-opacity-50 hover:text-opacity-100">
+                                    수정
+                                </a>
+                                <button class="text-black text-opacity-50 hover:text-opacity-100 focus:shadow-none focus:outline-none ml-4">삭제</button>
+                            </div>
+                        </td>
+
+                    </tr>
                 {/each}
 
                 </tbody>
             </table>
         </div>
-        {/if}
+    {/if}
+</SectionLayout>
 
-    </div>
-</section>

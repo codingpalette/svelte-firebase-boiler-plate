@@ -216,14 +216,6 @@
                             </div>
                         </li>
                         <li>
-                            <a href="/upload-product" use:link  class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
-                                <div class="icon_box w-8 text-center mr-2">
-                                    <i class="fas fa-upload"></i>
-                                </div>
-                                <span>업로드</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="/member-list" use:link  class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
                                 <div class="icon_box w-8 text-center mr-2">
                                     <i class="fas fa-users"></i>

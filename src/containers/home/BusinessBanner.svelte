@@ -64,7 +64,7 @@
   bind:innerHeight
   on:scroll={handleScroll(scrollY, innerWidth, innerHeight)} />
 
-<section class="banner_container mt-24" bind:this={canvas}>
+<section class="banner_container mt-12 md:mt-18" bind:this={canvas}>
   <div class="parallax_box">
     <div class="parallax_itme">
       <div

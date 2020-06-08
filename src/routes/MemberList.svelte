@@ -1,5 +1,6 @@
 <script>
     import {onMount} from "svelte";
+    import SectionLayout from '../components/layout/SectionLayout.svelte'
 
     let members = []
 
@@ -51,15 +52,8 @@
 </style>
 
 
-<section class="member_list_container px-4 box-border">
-    <div class="max-w-screen-lg pt-24 mr-auto ml-auto">
-        <h2 class=" text-center text-3xl font-bold">회원정보</h2>
-        <div class="pt-4 pb-12 header_text_box">
-            <p class="text-sm text-center text-gray-600 leading-normal">
-                회원 리스트가 나옵니다.
-            </p>
-        </div>
-        {#if members.length >= 1}
+<SectionLayout Title="회원정보" subTitle="회원 리스트가 나옵니다.">
+    {#if members.length >= 1}
         <div class="w-full rounded overflow-hidden shadow-lg">
             <table class="member_table">
                 <thead>
@@ -108,6 +102,6 @@
                 </tbody>
             </table>
         </div>
-        {/if}
-    </div>
-</section>
+    {/if}
+</SectionLayout>
+

@@ -1,5 +1,7 @@
 <script>
     import {onMount} from "svelte";
+    import {link} from "svelte-spa-router";
+    import Button from '../../components/utils/Button.svelte'
 
     let productList = []
     const getProducts = async () => {
@@ -17,7 +19,13 @@
     };
     onMount(() => {
         getProducts();
-    })
+    });
+
+    const onClickProductAddModal = () => {
+        console.log('aaa')
+    }
+
+
 </script>
 
 <style>
@@ -55,21 +63,41 @@
         white-space: nowrap;
     }
 
+    .table_content .price{
+        display: none;
+    }
+
     .table_content .image_box img{
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
+    .table_content .button_box{
+        padding-right: 24px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .table_content .price{
+            display: table-cell;
+        }
+
+    }
+
 </style>
 
 <section class="px-4 box-border">
-    <div class="max-w-screen-lg pt-24 mr-auto ml-auto">
+    <div class="max-w-screen-lg pt-12 md:pt-24 mr-auto ml-auto">
         <h2 class=" text-center text-3xl font-bold">상품정보</h2>
         <div class="pt-4 pb-12 header_text_box">
             <p class="text-sm text-center text-gray-600 leading-normal">
                 상품 리스트가 나옵니다.
             </p>
+        </div>
+        <div class="text-right mb-4">
+            <a href="/upload-product" use:link>
+                <Button  clickEvent={onClickProductAddModal}>상품등록</Button>
+            </a>
         </div>
         {#if productList.length >= 1}
         <div class="w-full rounded overflow-hidden shadow-lg">
@@ -78,7 +106,7 @@
                 <tr>
                     <th>상품</th>
                     <th>이미지</th>
-                    <th>가격</th>
+                    <th class="price">가격</th>
                     <th>&nbsp</th>
                 </tr>
                 </thead>
@@ -100,16 +128,20 @@
                         </div>
 
                     </td>
-                    <td>
+                    <td class="price">
                         <div class="wrapper">
                             {list.price}
                         </div>
                     </td>
                     <td>
-                        <div class="">
-                            <button>수정</button>
+                        <div class="button_box flex items-center justify-end">
+                            <a href="/upload-product?id={list.id}" use:link class="text-black text-opacity-50 hover:text-opacity-100">
+                                수정
+                            </a>
+                            <button class="text-black text-opacity-50 hover:text-opacity-100 focus:shadow-none focus:outline-none ml-4">삭제</button>
                         </div>
                     </td>
+
                 </tr>
                 {/each}
 

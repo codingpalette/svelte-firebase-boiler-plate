@@ -2,7 +2,8 @@
     import {userState} from "../store/UserStore";
     import {onMount} from "svelte";
     import {push} from "svelte-spa-router";
-    import UploadForm from "../containers/uplaodproduct/UploadForm.svelte";
+    import ProductList from '../containers/uplaodproduct/ProductList.svelte'
+
 
     onMount(() => {
         if ($userState.level !== 0) {
@@ -16,5 +17,6 @@
 </style>
 
 
+<ProductList />
 
-<UploadForm/>
+

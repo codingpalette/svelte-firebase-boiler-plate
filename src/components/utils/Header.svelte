@@ -209,7 +209,7 @@
                         </a>
                     </li>
 
-                    {#if $userState.level === 0}
+                    {#if $userState && $userState.level === 0}
                         <li class="mt-4">
                             <div class="p-4 text-black text-opacity-50 text-xs">
                                 관리자 메뉴
@@ -232,7 +232,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/upload-product" use:link  class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
+                            <a href="/upload-product-list" use:link  class="p-4 hover:bg-gray-200 block flex items-center" on:click={onClickDrawerClose}>
                                 <div class="icon_box w-8 text-center mr-2">
                                     <i class="fas fa-store"></i>
                                 </div>

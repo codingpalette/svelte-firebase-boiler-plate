@@ -1,11 +1,13 @@
 <script>
     import {productDetailItem} from "../../store/SiteStore";
     import {userState} from "../../store/UserStore";
-    import {link} from "svelte-spa-router";
+    import {link , push} from "svelte-spa-router";
     import Button from '../../components/utils/Button.svelte'
+    import Modal from '../../components/utils/Modal.svelte'
 
     let count = 1;
     let totalCount;
+    let modalOpen = false;
     const db = firebase.firestore();
     const realdb = firebase.database();
 
@@ -38,39 +40,48 @@
         // console.log($productDetailItem);
         // console.log($userState);
 
-        try {
-            let duplicate = false;
-            let quantityNum = 0;
-            let upData;
-            const cartRes = await db
-                    .collection("carts")
-                    .doc(`${$productDetailItem.id}${$userState.uid}`)
-                    .get();
-            // console.log(cartRes.data());
-            if (cartRes.data()) {
-                duplicate = true;
-                upData = cartRes.data();
-                upData.quantity = cartRes.data().quantity + count;
-            }
-
-            if (duplicate) {
-                //상품이 있을때
-                await db
+        if ($userState) {
+            try {
+                let duplicate = false;
+                let quantityNum = 0;
+                let upData;
+                const cartRes = await db
                         .collection("carts")
                         .doc(`${$productDetailItem.id}${$userState.uid}`)
-                        .update(upData);
-            } else {
-                await db.collection("carts").doc(`${$productDetailItem.id}${$userState.uid}`).set({
-                    uid: $userState.uid,
-                    pid: $productDetailItem.id,
-                    quantity: count,
-                    date: Date.now()
-                });
+                        .get();
+                // console.log(cartRes.data());
+                if (cartRes.data()) {
+                    duplicate = true;
+                    upData = cartRes.data();
+                    upData.quantity = cartRes.data().quantity + count;
+                }
+
+                if (duplicate) {
+                    //상품이 있을때
+                    await db
+                            .collection("carts")
+                            .doc(`${$productDetailItem.id}${$userState.uid}`)
+                            .update(upData);
+                } else {
+                    await db.collection("carts").doc(`${$productDetailItem.id}${$userState.uid}`).set({
+                        uid: $userState.uid,
+                        pid: $productDetailItem.id,
+                        quantity: count,
+                        date: Date.now()
+                    });
+                }
+                modalOpen = true;
+            } catch (e) {
+                console.log(e);
             }
-        } catch (e) {
-            console.log(e);
+        } else {
+            push('/login')
         }
     };
+
+    const onClickModalClose = () => {
+        modalOpen = false;
+    }
 </script>
 
 <style>
@@ -104,7 +115,7 @@
 
     .count_input {
         width: 50px;
-        height: 40px;
+        height: 30px;
         padding: 0 5px;
     }
 
@@ -166,17 +177,13 @@
                             <div class="count_btn_box ml-auto">
                                 <button
                                         type="button"
-                                        class="py-2 px-4 box-border bg-purple-500 hover:bg-purple-400
-                  focus:shadow-outline focus:outline-none text-white font-bold
-                  rounded"
+                                        class="py-2 px-4 box-border bg-purple-500 hover:bg-purple-400 focus:none focus:outline-none text-white font-bold rounded"
                                         on:click={onClickCountPlus}>
                                     <i class="fas fa-plus"/>
                                 </button>
                                 <button
                                         type="button"
-                                        class="py-2 px-4 box-border bg-purple-500 hover:bg-purple-400
-                  focus:shadow-outline focus:outline-none text-white font-bold
-                  rounded"
+                                        class="py-2 px-4 box-border bg-purple-500 hover:bg-purple-400 focus:none focus:outline-none text-white font-bold rounded"
                                         on:click={onClickCountMinus}>
                                     <i class="fas fa-minus"/>
                                 </button>
@@ -201,4 +208,27 @@
     <div class="main_img_box max-w-screen-lg mt-24 mr-auto ml-auto px-4">
         <img src={$productDetailItem.productMainImages[0].src} alt=""/>
     </div>
+{/if}
+
+<!--<Modal></Modal>-->
+
+
+{#if modalOpen}
+<div class="fixed left-0 top-0 w-full h-full z-30 flex items-center justify-center p-4 box-border">
+    <div class="content relative z-10 bg-white p-4 box-border shadow-md rounded">
+        <div class="item text-sm text-center">
+            <p>상품이 장바구니에 담겼습니다.</p>
+            <p>바로 확인하시겠습니까?</p>
+        </div>
+        <div class="btn_box flex items-center justify-end mt-4 text-sm">
+            <a href="/keep-products" use:link class="text-black text-opacity-50 hover:text-opacity-100 hover:text-purple-500">확인</a>
+            <button class="text-black text-opacity-50 hover:text-opacity-100 hover:text-purple-500 ml-4"
+                on:click={onClickModalClose}
+            >취소</button>
+        </div>
+    </div>
+    <div class="back absolute left-0 top-0 w-full h-full bg-black bg-opacity-25">
+
+    </div>
+</div>
 {/if}

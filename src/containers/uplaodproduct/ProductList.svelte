@@ -53,7 +53,7 @@
 
 
     const onClickProductDelete = async (id) => {
-        console.log(id)
+        // console.log(id)
         await firebase.firestore().collection("products").doc(id).delete();
         productList = productList.filter(item => item.id !== id)
     }
@@ -149,7 +149,9 @@
                     <tr>
                         <td>
                             <div class="wrapper">
-                                {list.title}
+                                <a href="/product/{list.id}" use:link class="text-black text-opacity-50 hover:text-opacity-100">
+                                    {list.title}
+                                </a>
                             </div>
 
                         </td>

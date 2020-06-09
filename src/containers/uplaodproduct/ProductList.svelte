@@ -4,7 +4,13 @@
     import SectionLayout from '../../components/layout/SectionLayout.svelte'
     import Button from '../../components/utils/Button.svelte'
 
+    let scrollY;
+    let innerWidth;
+    let innerHeight;
+
     let productList = []
+    let lastPost = '';
+    let scrollStart = true;
     const getProducts = async () => {
         const res = await firebase
                 .firestore()
@@ -15,12 +21,35 @@
         // console.log(res);
 
         productList = res.docs.map(e => e.data());
+        lastPost = res.docs[res.docs.length - 1]
         // productList = res.docs[res.docs.length - 1];
         // console.log(productList);
     };
     onMount(() => {
         getProducts();
     });
+
+    const scrollPost = async data => {
+        try {
+            const res = await firebase.firestore().collection("products").orderBy("createdAt", "desc").startAfter(data).limit(10).get();
+            // console.log(res)
+            const plusItems = res.docs.map(e => e.data());
+            productList = [...productList , ...plusItems];
+            lastPost = res.docs[res.docs.length - 1];
+            scrollStart = true;
+        } catch(e) {
+            console.log(e)
+        } finally {
+
+        }
+    }
+
+    const handleScroll = (sY, iW, iH) => {
+        if ((document.body.scrollHeight - iH) * 0.8 < sY && scrollStart) {
+            scrollStart = false;
+            scrollPost(lastPost)
+        }
+    }
 
 
     const onClickProductDelete = async (id) => {
@@ -90,6 +119,12 @@
     }
 
 </style>
+
+<svelte:window
+        bind:scrollY
+        bind:innerWidth
+        bind:innerHeight
+        on:scroll={handleScroll(scrollY, innerWidth, innerHeight)} />
 
 <SectionLayout Title="상품정보" subTitle="상품정보 리스트입니다.">
     <div class="text-right mb-4">

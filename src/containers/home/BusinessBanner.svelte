@@ -3,8 +3,8 @@
 
   let scrollY;
   let innerWidth;
-
   let innerHeight;
+
   let canvas;
   let canvasY = 0;
 

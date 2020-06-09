@@ -10,20 +10,23 @@
                 .firestore()
                 .collection("products")
                 .orderBy("createdAt", "desc")
-                .limit(6)
+                .limit(10)
                 .get();
-        console.log(res);
+        // console.log(res);
 
         productList = res.docs.map(e => e.data());
         // productList = res.docs[res.docs.length - 1];
-        console.log(productList);
+        // console.log(productList);
     };
     onMount(() => {
         getProducts();
     });
 
-    const onClickProductAddModal = () => {
-        console.log('aaa')
+
+    const onClickProductDelete = async (id) => {
+        console.log(id)
+        await firebase.firestore().collection("products").doc(id).delete();
+        productList = productList.filter(item => item.id !== id)
     }
 
 
@@ -54,7 +57,8 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         white-space: nowrap;
     }
-    .table_content tbody td .wrapper{
+
+    .table_content tbody td .wrapper {
         width: inherit;
         position: relative;
         z-index: 4;
@@ -64,22 +68,22 @@
         white-space: nowrap;
     }
 
-    .table_content .price{
+    .table_content .price {
         display: none;
     }
 
-    .table_content .image_box img{
+    .table_content .image_box img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
-    .table_content .button_box{
+    .table_content .button_box {
         padding-right: 24px;
     }
 
     @media screen and (min-width: 768px) {
-        .table_content .price{
+        .table_content .price {
             display: table-cell;
         }
 
@@ -90,7 +94,7 @@
 <SectionLayout Title="상품정보" subTitle="상품정보 리스트입니다.">
     <div class="text-right mb-4">
         <a href="/upload-product" use:link>
-            <Button  clickEvent={onClickProductAddModal}>상품등록</Button>
+            <Button>상품등록</Button>
         </a>
     </div>
     {#if productList.length >= 1}
@@ -132,7 +136,12 @@
                                 <a href="/upload-product?id={list.id}" use:link class="text-black text-opacity-50 hover:text-opacity-100">
                                     수정
                                 </a>
-                                <button class="text-black text-opacity-50 hover:text-opacity-100 focus:shadow-none focus:outline-none ml-4">삭제</button>
+                                <button
+                                        class="text-black text-opacity-50 hover:text-opacity-100 focus:shadow-none focus:outline-none ml-4"
+                                        on:click={onClickProductDelete(list.id)}
+                                >
+                                    삭제
+                                </button>
                             </div>
                         </td>
 

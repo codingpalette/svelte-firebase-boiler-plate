@@ -116,7 +116,7 @@
 
         try {
             await firebase.firestore().collection("products").doc(formData.id).set(formData);
-            push("/");
+            push("/upload-product-list");
         } catch (e) {
             console.log(e);
         }

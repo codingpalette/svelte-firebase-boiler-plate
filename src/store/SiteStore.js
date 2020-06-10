@@ -9,6 +9,6 @@ export const errorState = writable({
   open: false,
   errorMessage: '',
 });
-export const productList = writable([]);
-export const productDetailItem = writable(null);
-export const productLast = writable(null);
+
+
+

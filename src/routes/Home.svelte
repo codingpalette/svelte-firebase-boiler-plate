@@ -1,5 +1,5 @@
 <script>
-    import {productList, productLast} from "../store/SiteStore";
+    import {homeList} from '../store/ProductStore'
     import { onMount } from "svelte"
     import {link} from "svelte-spa-router";
 
@@ -72,16 +72,16 @@
 
 
     const getProducts = async () => {
-        const res = await firebase
-                .firestore()
-                .collection("products")
-                .orderBy("createdAt", "desc")
-                .limit(6)
-                .get();
-        // console.log(res);
-        $productList = res.docs.map(e => e.data());
-        $productLast = res.docs[res.docs.length - 1];
-        // console.log($productList);
+        if ($homeList.length < 1) {
+            const res = await firebase
+                    .firestore()
+                    .collection("products")
+                    .orderBy("createdAt", "desc")
+                    .limit(6)
+                    .get();
+            $homeList = res.docs.map(e => e.data());
+        }
+
     };
 
     onMount(() => {
@@ -203,14 +203,14 @@
 <SectionLayout Title="OUR LATEST SHOP" subTitle="Lorem ipsum dolor, sit amet consectetur adipisicing elit.">
 
     <div class="item_content max-w-screen-lg mr-auto ml-auto">
-        {#if $productList.length >= 1}
+        {#if $homeList.length >= 1}
             <div class="link_box text-center">
                 <a href="/about/" use:link class="opacity-75 hover:opacity-100 hover:underline text-base">
                     VIEW ALL SHOP
                 </a>
             </div>
             <ul class="flex items-center flex-wrap">
-                {#each $productList as list}
+                {#each $homeList as list}
                     <ShopItemList {list}/>
                 {/each}
             </ul>

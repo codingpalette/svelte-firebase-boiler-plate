@@ -1,26 +1,28 @@
 <script>
+    import {shopList , shopLast} from '../store/ProductStore'
     import {onMount} from "svelte";
     import {link} from "svelte-spa-router";
     import SectionLayout from '../components/layout/SectionLayout.svelte'
-
-    let Img01 = "images/about_img01.jpg";
 
     let productList = []
     let lastPost = '';
     let scrollStart = true;
     const getProducts = async () => {
-        const res = await firebase
-                .firestore()
-                .collection("products")
-                .orderBy("createdAt", "desc")
-                .limit(20)
-                .get();
-        // console.log(res);
+        if ($shopList.length < 1) {
+            const res = await firebase
+                    .firestore()
+                    .collection("products")
+                    .orderBy("createdAt", "desc")
+                    .limit(20)
+                    .get();
+            // console.log(res);
 
-        productList = res.docs.map(e => e.data());
-        lastPost = res.docs[res.docs.length - 1]
-        // productList = res.docs[res.docs.length - 1];
-        console.log(productList);
+            $shopList = res.docs.map(e => e.data());
+            $shopLast = res.docs[res.docs.length - 1]
+            // productList = res.docs[res.docs.length - 1];
+            // console.log($shopList);
+        }
+
     };
     onMount(() => {
         getProducts();
@@ -82,11 +84,11 @@
     }
 </style>
 
-{#if productList.length >= 1}
+{#if $shopList.length >= 1}
 <div class="shop_container p-8 box-border">
     <div class="inner max-w-full">
         <div class="columns">
-            {#each productList as list}
+            {#each $shopList as list}
             <div class="fit">
                 <a href="/">
                     <img src="{list.productCoverImages[0].src}" alt="">

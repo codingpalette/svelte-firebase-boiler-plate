@@ -3,7 +3,7 @@
   export let section;
   export let maxitem;
   export let imageLists;
-  export let fullWidth;
+  export let fullWidth = undefined;
 
   const RandomNumber = Math.random()
     .toString(36)

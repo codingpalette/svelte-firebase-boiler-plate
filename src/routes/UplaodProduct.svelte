@@ -1,6 +1,7 @@
 <script>
     import {userState} from "../store/UserStore";
     import {errorState} from "../store/SiteStore";
+    import {homeList , productList , shopList } from '../store/ProductStore'
     import {onMount} from "svelte";
     import {link , push , querystring} from "svelte-spa-router";
     import qs from 'qs';
@@ -10,6 +11,7 @@
     import SectionLayout from '../components/layout/SectionLayout.svelte'
     import FileUpload from "../components/utils/FileUpload.svelte";
     import Error from "../components/Error.svelte";
+    import ProgressBar from '../components/utils/ProgressBar.svelte'
 
     onMount(() => {
         if ($userState.level !== 0) {
@@ -18,6 +20,7 @@
     });
 
     let Mode = "create";
+    let loading = false
     let questions = [
         {id: 1, text: `육류`},
         {id: 2, text: `해산물`},
@@ -87,6 +90,7 @@
             return false;
         }
 
+        loading = true
         const today = new Date();
         let dd = today.getDate();
         let mm = today.getMonth() + 1; //January is 0!
@@ -129,6 +133,13 @@
             push("/upload-product-list");
         } catch (e) {
             console.log(e);
+        } finally {
+            $homeList.length >= 1 && $homeList.unshift(formData)
+            $productList.length >= 1 && $productList.unshift(formData)
+            $shopList.length >= 1 && $shopList.unshift(formData)
+
+
+
         }
 
         // const formData = new FormData(); // Currently empty
@@ -144,6 +155,9 @@
     }
 </style>
 
+{#if loading}
+<ProgressBar />
+{/if}
 
 <SectionLayout Title="상품 업로드" subTitle="상품 업로드 페이지입니다.">
     <form on:submit|preventDefault={handleSubmit}>
@@ -173,7 +187,7 @@
                 </label>
                 <textarea
                         class="bg-white focus:outline-none focus:shadow-none border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-                        id="description" type="text" placeholder="" maxlength="200" bind:value={formData.description}/>
+                        id="description" type="text" placeholder="" maxlength="250" bind:value={formData.description}/>
             </div>
         </div>
 

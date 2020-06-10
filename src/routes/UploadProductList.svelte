@@ -7,6 +7,7 @@
     import SectionLayout from '../components/layout/SectionLayout.svelte'
     import Button from '../components/utils/Button.svelte'
     import NotContent from '../components/utils/NotContent.svelte'
+    import ProgressBar from '../components/utils/ProgressBar.svelte'
 
 
     onMount(() => {
@@ -18,6 +19,7 @@
     let scrollY;
     let innerWidth;
     let innerHeight;
+    let loading = true;
 
     let scrollStart = true;
     const getProducts = async () => {
@@ -31,7 +33,9 @@
             // console.log(res);
             $productList = res.docs.map(e => e.data());
             $productLast = res.docs[res.docs.length - 1]
+            loading = false
         }
+        loading = false
     };
     onMount(() => {
         getProducts();
@@ -133,6 +137,13 @@
         bind:innerHeight
         on:scroll={handleScroll(scrollY, innerWidth, innerHeight)} />
 
+
+
+
+{#if loading}
+    <ProgressBar  />
+{:else}
+
 <SectionLayout Title="상품정보" subTitle="상품정보 리스트입니다.">
     <div class="text-right mb-4">
         <a href="/upload-product" use:link>
@@ -200,6 +211,6 @@
     {/if}
 </SectionLayout>
 
-
+{/if}
 
 

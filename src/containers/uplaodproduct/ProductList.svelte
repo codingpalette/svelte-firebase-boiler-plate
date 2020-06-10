@@ -3,6 +3,7 @@
     import {link} from "svelte-spa-router";
     import SectionLayout from '../../components/layout/SectionLayout.svelte'
     import Button from '../../components/utils/Button.svelte'
+    import NotContent from '../../components/utils/NotContent.svelte'
 
     let scrollY;
     let innerWidth;
@@ -188,6 +189,8 @@
                 </tbody>
             </table>
         </div>
+    {:else}
+        <NotContent text="상품이 없습니다." />
     {/if}
 </SectionLayout>
 

@@ -53,7 +53,7 @@
     transition: transform 1s;
     transition-timing-function: ease-out;
   }
-  .back {
+  .banner_container .back {
     background-color: rgba(0, 0, 0, 0.5);
   }
 </style>

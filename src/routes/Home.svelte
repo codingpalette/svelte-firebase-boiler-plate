@@ -1,6 +1,7 @@
 <script>
     import {productList, productLast} from "../store/SiteStore";
     import { onMount } from "svelte"
+    import {link} from "svelte-spa-router";
 
 
     import SectionLayout from '../components/layout/SectionLayout.svelte';

@@ -205,7 +205,7 @@
     <div class="item_content max-w-screen-lg mr-auto ml-auto">
         {#if $homeList.length >= 1}
             <div class="link_box text-center">
-                <a href="/about/" use:link class="opacity-75 hover:opacity-100 hover:underline text-base">
+                <a href="/shop" use:link class="opacity-75 hover:opacity-100 hover:underline text-base">
                     VIEW ALL SHOP
                 </a>
             </div>

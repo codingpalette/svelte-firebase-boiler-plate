@@ -34,8 +34,9 @@
             $productList = res.docs.map(e => e.data());
             $productLast = res.docs[res.docs.length - 1]
             loading = false
+        } else {
+            loading = false
         }
-        loading = false
     };
     onMount(() => {
         getProducts();
@@ -50,7 +51,7 @@
             $productLast = res.docs[res.docs.length - 1];
             scrollStart = true;
         } catch(e) {
-            console.log(e)
+            // console.log(e)
         } finally {
 
         }
@@ -132,10 +133,11 @@
 
 
 <svelte:window
-        bind:scrollY
-        bind:innerWidth
-        bind:innerHeight
-        on:scroll={handleScroll(scrollY, innerWidth, innerHeight)} />
+    bind:scrollY
+    bind:innerWidth
+    bind:innerHeight
+    on:scroll={handleScroll(scrollY, innerWidth, innerHeight)}
+/>
 
 
 

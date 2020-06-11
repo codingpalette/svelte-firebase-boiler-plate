@@ -8,6 +8,9 @@
     let productList = []
     let lastPost = '';
     let scrollStart = true;
+    let scrollY;
+    let innerWidth;
+    let innerHeight;
     let loading = true;
 
     const getProducts = async () => {
@@ -25,13 +28,36 @@
             // productList = res.docs[res.docs.length - 1];
             // console.log($shopList);
             loading = false;
+        } else {
+            loading = false;
         }
-        loading = false;
 
     };
     onMount(() => {
         getProducts();
     });
+
+    const scrollPost = async data => {
+        try {
+            const res = await firebase.firestore().collection("products").orderBy("createdAt", "desc").startAfter(data).limit(20).get();
+            // console.log(res)
+            const plusItems = res.docs.map(e => e.data());
+            $shopList = [...$shopList , ...plusItems];
+            $shopLast = res.docs[res.docs.length - 1];
+            scrollStart = true;
+        } catch(e) {
+            // console.log(e)
+        } finally {
+
+        }
+    }
+
+    const handleScroll = (sY, iW, iH) => {
+        if ((document.body.scrollHeight - iH) * 0.5 < sY && scrollStart) {
+            scrollStart = false;
+            scrollPost($shopLast)
+        }
+    }
 
 </script>
 
@@ -89,6 +115,13 @@
     }
 </style>
 
+<svelte:window
+    bind:scrollY
+    bind:innerWidth
+    bind:innerHeight
+    on:scroll={handleScroll(scrollY, innerWidth, innerHeight)}
+/>
+
 {#if loading}
     <ProgressBar />
 
@@ -100,7 +133,7 @@
                 <div class="columns">
                     {#each $shopList as list}
                         <div class="fit">
-                            <a href="/">
+                            <a href="/product/{list.id}" use:link>
                                 <img src="{list.productCoverImages[0].src}" alt="">
                                 <div class="text_box bg-black bg-opacity-50 text-white flex items-center justify-center text-lg">
                                     {list.title}

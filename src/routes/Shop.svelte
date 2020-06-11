@@ -3,10 +3,13 @@
     import {onMount} from "svelte";
     import {link} from "svelte-spa-router";
     import SectionLayout from '../components/layout/SectionLayout.svelte'
+    import ProgressBar from '../components/utils/ProgressBar.svelte'
 
     let productList = []
     let lastPost = '';
     let scrollStart = true;
+    let loading = true;
+
     const getProducts = async () => {
         if ($shopList.length < 1) {
             const res = await firebase
@@ -21,7 +24,9 @@
             $shopLast = res.docs[res.docs.length - 1]
             // productList = res.docs[res.docs.length - 1];
             // console.log($shopList);
+            loading = false;
         }
+        loading = false;
 
     };
     onMount(() => {
@@ -84,23 +89,31 @@
     }
 </style>
 
-{#if $shopList.length >= 1}
-<div class="shop_container p-8 box-border">
-    <div class="inner max-w-full">
-        <div class="columns">
-            {#each $shopList as list}
-            <div class="fit">
-                <a href="/">
-                    <img src="{list.productCoverImages[0].src}" alt="">
-                    <div class="text_box bg-black bg-opacity-50 text-white flex items-center justify-center text-lg">
-                        {list.title}
-                    </div>
-                </a>
+{#if loading}
+    <ProgressBar />
+
+{:else}
+
+    {#if $shopList.length >= 1}
+        <div class="shop_container p-8 box-border">
+            <div class="inner max-w-full">
+                <div class="columns">
+                    {#each $shopList as list}
+                        <div class="fit">
+                            <a href="/">
+                                <img src="{list.productCoverImages[0].src}" alt="">
+                                <div class="text_box bg-black bg-opacity-50 text-white flex items-center justify-center text-lg">
+                                    {list.title}
+                                </div>
+                            </a>
+                        </div>
+                    {/each}
+
+                </div>
             </div>
-            {/each}
 
         </div>
-    </div>
+    {/if}
 
-</div>
 {/if}
+

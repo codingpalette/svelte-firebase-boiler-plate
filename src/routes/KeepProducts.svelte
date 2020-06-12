@@ -10,6 +10,7 @@
 
     let kakaopayIcon = "images/kakaopay.png"
     let cartItems = [];
+    let totalPrice = 0;
     let loading = true;
 
     const getItems = async item => {
@@ -47,7 +48,7 @@
             });
             await Promise.all(promises);
             // console.log(cartItems);
-            // calculateTotal(cartItems);
+            calculateTotal(cartItems);
             // cartOk = true;
             loading = false;
         } else {
@@ -56,6 +57,50 @@
             // cartOk = true;
         }
     });
+
+    const calculateTotal = cartDetail => {
+        let total = 0;
+        cartDetail.map(item => {
+            total += parseInt(item.price, 10) * item.quantity;
+        });
+        // console.log(total);
+        totalPrice = total;
+    };
+
+
+    const IMP = window.IMP; // 생략가능
+    IMP.init("imp18299152"); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
+    const onClickKakaoPay = () => {
+        IMP.request_pay(
+                {
+                    pg: "kakao", // version 1.1.0부터 지원.
+                    pay_method: "card",
+                    merchant_uid: "merchant_" + new Date().getTime(),
+                    name: "주문명:결제테스트",
+                    amount: totalPrice,
+                    buyer_email: "iamport@siot.do",
+                    buyer_name: "구매자이름",
+                    buyer_tel: "010-1234-5678",
+                    buyer_addr: "서울특별시 강남구 삼성동",
+                    buyer_postcode: "123-456",
+                    m_redirect_url: "https://www.yourdomain.com/payments/complete"
+                },
+                function (rsp) {
+                    if (rsp.success) {
+                        var msg = "결제가 완료되었습니다.";
+                        msg += "고유ID : " + rsp.imp_uid;
+                        msg += "상점 거래ID : " + rsp.merchant_uid;
+                        msg += "결제 금액 : " + rsp.paid_amount;
+                        msg += "카드 승인번호 : " + rsp.apply_num;
+                    } else {
+                        var msg = "결제에 실패하였습니다.";
+                        msg += "에러내용 : " + rsp.error_msg;
+                    }
+                    alert(msg);
+                }
+        );
+    }
 
 </script>
 
@@ -122,7 +167,7 @@
 
 <SectionLayout Title="장바구니" subTitle="모든 주문에 무료 배송 서비스가 제공됩니다.">
     {#if loading}
-        <ProgressBar />
+        <ProgressBar/>
     {:else}
         <div class="w-full rounded overflow-hidden shadow-lg">
             <table class="table_content">
@@ -137,49 +182,54 @@
                 </thead>
                 <tbody>
                 {#each cartItems as item}
-                <tr>
-                    <td>
-                        <div class="wrapper">
-                            <a href="/product/{item.id}" use:link class="text-black text-opacity-50 hover:text-opacity-100">
-                                {item.title}
-                            </a>
-                        </div>
-
-                    </td>
-                    <td>
-                        <div class="wrapper">
-                            <div class="image_box h-10 w-10 flex items-center justify-center overflow-hidden rounded-full">
-                                <img src="{item.image}" alt="">
+                    <tr>
+                        <td>
+                            <div class="wrapper">
+                                <a href="/product/{item.id}" use:link class="text-black text-opacity-50 hover:text-opacity-100">
+                                    {item.title}
+                                </a>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="wrapper">
-                            {item.price.toLocaleString()}원
-                        </div>
-                    </td>
-                    <td class="price">
-                        <div class="wrapper">
-                            <div class="image_box h-10 w-10 flex items-center justify-center overflow-hidden rounded-full">
-                                {item.quantity}개
+
+                        </td>
+                        <td>
+                            <div class="wrapper">
+                                <div class="image_box h-10 w-10 flex items-center justify-center overflow-hidden rounded-full">
+                                    <img src="{item.image}" alt="">
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="button_box flex items-center justify-end">
-
-                            <button
-                                    class="text-black text-opacity-50 hover:text-opacity-100 focus:shadow-none focus:outline-none ml-4"
-
-                            >
-                                삭제
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            <div class="wrapper">
+                                {item.price.toLocaleString()}원
+                            </div>
+                        </td>
+                        <td class="price">
+                            <div class="wrapper">
+                                <div class="image_box h-10 w-10 flex items-center justify-center overflow-hidden rounded-full">
+                                    {item.quantity}개
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="button_box flex items-center justify-end">
+                                <button class="text-black text-opacity-50 hover:text-opacity-100 focus:shadow-none focus:outline-none ml-4">
+                                    삭제
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 {/each}
                 </tbody>
             </table>
+        </div>
+        <div class="my-4 text-right">
+            <span>총 결제금액</span>
+            <span>{totalPrice.toLocaleString()}원</span>
+        </div>
+        <div class="btn_box text-right">
+            <button class="focus:outline-none" on:click={onClickKakaoPay}>
+                <img src={kakaopayIcon} alt="">
+            </button>
         </div>
     {/if}
 

@@ -134,6 +134,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="/setting" use:link class="cursor-pointer hover:bg-gray-300 py-3 px-4 block">
+                                        <i class="fas fa-cog"></i>
+                                        <span class="ml-2">설정</span>
+                                    </a>
+                                </li>
+                                <li>
                                     <div class="cursor-pointer hover:bg-gray-300 py-3 px-4 block" on:click={onClickLogout}>
                                         <i class="fas fa-sign-out-alt"></i>
                                         <span class="ml-2">로그아웃</span>

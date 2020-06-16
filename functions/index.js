@@ -20,8 +20,9 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 
 exports.createUser = functions.auth.user().onCreate(async (user) => {
     const {uid, email, displayName, emailVerified, photoURL, disabled} = user;
-    const claims = {level: 2};
-    if (functions.config().admin.email === user.email && user.emailVerified) claims.level = 0;
+    const claims = {level: 5};
+    // if (functions.config().admin.email === user.email && user.emailVerified) claims.level = 0;
+    if (functions.config().admin.email === user.email) claims.level = 0;
     await admin.auth().setCustomUserClaims(uid, claims);
     const d = {
         uid,

@@ -6,6 +6,7 @@
     export let clickEvent = undefined;
     export let href = '/'
     export let type = 'button'
+    export let btnloading = false;
 </script>
 
 <style>
@@ -36,13 +37,16 @@
         width: 100%;
     }
 
+    button.active {
+        pointer-events: none;
+    }
+
 </style>
 
 {#if mode === 'link'}
-    <a
-            href={href}
-            use:link
-            class="bg-transparent leading-normal hover:bg-black text-xs text-black text-opacity-75 hover:text-white px-4 py-2 border border-gray-500 hover:border-transparent focus:shadow-none focus:outline-none rounded-sm"
+    <a href={href}
+       use:link
+       class="bg-transparent leading-normal hover:bg-black text-xs text-black text-opacity-75 hover:text-white px-4 py-2 border border-gray-500 hover:border-transparent focus:shadow-none focus:outline-none rounded-sm"
     >
         <slot></slot>
     </a>
@@ -50,8 +54,13 @@
     <button type={type}
             class="bg-transparent leading-normal hover:bg-black text-xs text-black text-opacity-75 hover:text-white px-4 py-2 border border-gray-500 hover:border-transparent focus:shadow-none focus:outline-none rounded-sm"
             class:full={width === 'full'}
+            class:active="{btnloading}"
             on:click={clickEvent}>
-        <slot></slot>
+        {#if btnloading}
+            <span><i class="fas fa-spinner fa-spin"></i></span>
+        {:else}
+            <slot></slot>
+        {/if}
     </button>
 {/if}
 

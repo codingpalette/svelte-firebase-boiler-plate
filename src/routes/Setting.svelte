@@ -1,21 +1,27 @@
 <script>
     import {userState} from "../store/UserStore";
+    import {errorState} from "../store/SiteStore";
     import {onMount} from "svelte";
     import {push} from "svelte-spa-router";
 
     import SectionLayout from '../components/layout/SectionLayout.svelte';
     import InputGroup from '../components/utils/InputGroup.svelte';
     import Button from '../components/utils/Button.svelte';
+    import Error from "../components/Error.svelte";
+
 
     onMount(() => {
-        if ($userState.level !== 0) {
+        if (!$userState.level) {
             push("/");
         }
     });
 
     onMount(() => {
-        console.log($userState)
+        // console.log($userState)
     });
+
+
+    let btnloading = false;
 
 
     function addressEvent() {
@@ -44,12 +50,43 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                console.log(roadAddr)
+                // console.log(roadAddr)
+                $userState.address.road = roadAddr;
+                $userState.address.postcode = data.zonecode;
+
                 // addressList.postcode = data.zonecode;
                 // addressList.road = roadAddr;
                 // addressList.jibun = data.jibunAddress;
             }
         }).open();
+    }
+
+    const onClickSettingSave = async () => {
+
+        if ($userState.displayName.trim() === '') {
+            $errorState = {
+                open: true,
+                errorMessage: "이름을 입력해 주세요."
+            };
+            return false;
+        }
+
+        btnloading = true
+        try {
+            // console.log($userState)
+            await firebase.firestore().collection('users').doc($userState.uid).update({
+                displayName: $userState.displayName,
+                address: {
+                    road: $userState.address.road,
+                    road_detail: $userState.address.road_detail,
+                    postcode: $userState.address.postcode,
+                }
+            })
+        } catch (e) {
+            console.log('e')
+        } finally {
+            btnloading = false
+        }
     }
 
 </script>
@@ -59,25 +96,33 @@
 
 </style>
 
+
 <SectionLayout Title="내프로필" subTitle="내프로필을 수정할 수 있습니다.">
     <div class="profile_form_area">
         <div class="pf_img_area">
 
         </div>
         <div class="pf_input_area">
-            <InputGroup labelTxt="이름" idValue="name" valueData=""/>
+            <InputGroup labelTxt="이름" idValue="name" bind:valueData="{$userState.displayName}"/>
         </div>
         <div class="pf_input_area">
             <div class="pb-4">
                 <Button clickEvent={addressEvent} mode="btn">주소찾기</Button>
             </div>
-            <InputGroup labelTxt="주소" idValue="road" valueData=""/>
-            <InputGroup labelTxt="상세주소" idValue="road_detail" valueData=""/>
-            <InputGroup labelTxt="우편번호" idValue="postcode" valueData=""/>
+            <InputGroup labelTxt="주소" idValue="road" bind:valueData="{$userState.address.road}"/>
+            <InputGroup labelTxt="상세주소" idValue="road_detail" bind:valueData="{$userState.address.road_detail}"/>
+            <InputGroup labelTxt="우편번호" idValue="postcode" bind:valueData="{$userState.address.postcode}"/>
         </div>
         <div class="btn_box flex items-center justify-center">
             <Button mode="link" href="/">취소</Button>
-            <Button >수정</Button>
+            <Button
+                    clickEvent="{onClickSettingSave}"
+                    btnloading="{btnloading}"
+            >
+                수정
+            </Button>
         </div>
     </div>
 </SectionLayout>
+
+<Error backcolor="red"/>

@@ -1,7 +1,7 @@
 <script>
     import {userState} from "../store/UserStore";
     import {onMount} from "svelte";
-    import {link, push} from "svelte-spa-router";
+    import {push} from "svelte-spa-router";
 
     import SectionLayout from '../components/layout/SectionLayout.svelte';
     import InputGroup from '../components/utils/InputGroup.svelte';
@@ -69,28 +69,15 @@
         </div>
         <div class="pf_input_area">
             <div class="pb-4">
-                <Button clickEvent={addressEvent}>주소찾기</Button>
+                <Button clickEvent={addressEvent} mode="btn">주소찾기</Button>
             </div>
             <InputGroup labelTxt="주소" idValue="road" valueData=""/>
             <InputGroup labelTxt="상세주소" idValue="road_detail" valueData=""/>
             <InputGroup labelTxt="우편번호" idValue="postcode" valueData=""/>
         </div>
         <div class="btn_box flex items-center justify-center">
-            <a
-                href="/"
-                use:link
-                class="mr-1 leading-normal bg-transparent hover:bg-black text-xs text-black text-opacity-75 hover:text-white px-4 py-2 border border-gray-500 hover:border-transparent focus:shadow-none focus:outline-none rounded-sm"
-            >
-                취소
-            </a>
+            <Button mode="link" href="/">취소</Button>
             <Button >수정</Button>
         </div>
-
-
-
-
     </div>
-
-
-
 </SectionLayout>

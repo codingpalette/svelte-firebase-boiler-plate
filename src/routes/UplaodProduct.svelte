@@ -11,7 +11,8 @@
     import SectionLayout from '../components/layout/SectionLayout.svelte'
     import FileUpload from "../components/utils/FileUpload.svelte";
     import Error from "../components/Error.svelte";
-    import ProgressBar from '../components/utils/ProgressBar.svelte'
+    import ProgressBar from '../components/utils/ProgressBar.svelte';
+    import Button from '../components/utils/Button.svelte';
 
     onMount(() => {
         if ($userState.level !== 0) {
@@ -222,10 +223,8 @@
             </div>
         </div>
         <div class="btn_box flex items-center justify-center">
-            <a href="/upload-product-list" use:link class="mr-1 bg-transparent hover:bg-black text-xs text-black text-opacity-75 hover:text-white px-4 py-2 border border-gray-500 hover:border-transparent focus:shadow-none focus:outline-none rounded-sm">취소</a>
-            <button type="submit" class="ml-1 bg-transparent hover:bg-black text-xs text-black text-opacity-75 hover:text-white px-4 py-2 border border-gray-500 hover:border-transparent focus:shadow-none focus:outline-none rounded-sm">
-                업로드
-            </button>
+            <Button mode="link" href="/upload-product-list">취소</Button>
+            <Button type="submit">업로드</Button>
         </div>
 
 

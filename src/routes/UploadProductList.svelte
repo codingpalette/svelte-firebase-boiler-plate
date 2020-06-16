@@ -148,9 +148,7 @@
 
 <SectionLayout Title="상품정보" subTitle="상품정보 리스트입니다.">
     <div class="text-right mb-4">
-        <a href="/upload-product" use:link>
-            <Button>상품등록</Button>
-        </a>
+        <Button mode="link" href="/upload-product">상품등록</Button>
     </div>
     {#if $productList.length >= 1}
         <div class="w-full rounded overflow-hidden shadow-lg">

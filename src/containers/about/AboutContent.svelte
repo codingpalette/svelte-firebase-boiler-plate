@@ -1,8 +1,8 @@
 <script>
-  let aboutImg01 = "images/about_img01.jpg";
-  let aboutImg02 = "images/about_img02.jpg";
-  let aboutImg03 = "images/about_img03.jpg";
-  let backImg = "images/about_img04.jpg";
+  let aboutImg01 = "images/about_img01-1.jpg";
+  let aboutImg02 = "images/about_img02-1.jpg";
+  let aboutImg03 = "images/about_img03-1.jpg";
+  let backImg = "images/about_img04-1.jpg";
 </script>
 
 <style>

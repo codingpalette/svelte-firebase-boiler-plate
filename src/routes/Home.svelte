@@ -10,7 +10,7 @@
     import NotContent from "../components/utils/NotContent.svelte";
 
 
-    let backImg = "images/back_img04.jpg";
+    let backImg = "images/back_img04-1.jpg";
     let backImg05 = "images/back_img05.jpg";
 
 

@@ -1,6 +1,17 @@
 <script>
+    import {userState} from "../store/UserStore";
     import {onMount} from "svelte";
+    import {push} from "svelte-spa-router";
     import SectionLayout from '../components/layout/SectionLayout.svelte'
+
+
+    onMount(() => {
+        if (!$userState) {
+            push("/");
+        } else if ($userState.level !== 0) {
+            push("/");
+        }
+    });
 
     let members = []
 

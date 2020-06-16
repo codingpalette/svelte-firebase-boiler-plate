@@ -2,7 +2,7 @@
     import {errorState, siteOk} from "../../store/SiteStore";
     import {userState} from "../../store/UserStore";
     import {fly} from "svelte/transition";
-    import {link, location} from "svelte-spa-router";
+    import {link, location , push} from "svelte-spa-router";
     import active from "svelte-spa-router/active";
     import PenButton from "../PenButton.svelte";
     import Button from '../utils/Button.svelte'
@@ -39,6 +39,7 @@
     const onClickLogout = () => {
         firebase.auth().signOut();
         $userState = null;
+        push('/')
     };
 
     const onClickTitleModify = async () => {

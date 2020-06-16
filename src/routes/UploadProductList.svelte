@@ -11,7 +11,9 @@
 
 
     onMount(() => {
-        if ($userState.level !== 0) {
+        if (!$userState) {
+            push("/");
+        } else if ($userState.level !== 0) {
             push("/");
         }
     });

@@ -11,7 +11,7 @@
 
 
     onMount(() => {
-        if (!$userState.level) {
+        if (!$userState) {
             push("/");
         }
     });
@@ -96,7 +96,7 @@
 
 </style>
 
-
+{#if $userState}
 <SectionLayout Title="내프로필" subTitle="내프로필을 수정할 수 있습니다.">
     <div class="profile_form_area">
         <div class="pf_img_area">
@@ -124,5 +124,6 @@
         </div>
     </div>
 </SectionLayout>
+{/if}
 
 <Error backcolor="red"/>
